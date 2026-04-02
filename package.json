@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "npm run telegram:setup && npm run telegram:notify && next start",
     "lint": "eslint .",
     "worker:dry": "set WORKER_DRY_RUN=true&& node scripts/auto-trader-worker.js",
     "worker:live": "set WORKER_DRY_RUN=false&& node scripts/auto-trader-worker.js",
