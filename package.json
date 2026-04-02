@@ -10,7 +10,9 @@
     "worker:dry": "set WORKER_DRY_RUN=true&& node scripts/auto-trader-worker.js",
     "worker:live": "set WORKER_DRY_RUN=false&& node scripts/auto-trader-worker.js",
     "stream:dry": "set WORKER_DRY_RUN=true&& node scripts/streaming-worker.js",
-    "stream:live": "set WORKER_DRY_RUN=false&& node scripts/streaming-worker.js"
+    "stream:live": "set WORKER_DRY_RUN=false&& node scripts/streaming-worker.js",
+    "telegram:setup": "ts-node scripts/setup-telegram.ts",
+    "telegram:notify": "ts-node scripts/notify-deploy.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

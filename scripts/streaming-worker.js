@@ -41,16 +41,22 @@ const CRYPTO_WS  = "wss://stream.data.alpaca.markets/v1beta3/crypto/us"
 const TG_TOKEN   = "8529025762:AAFbTWjJbCUEFhiQjZquuSCPzr-hiuDzhhY"
 let   tgChatIds  = [] // Dynamically found
 
-// Symbols to stream
-const STOCK_SYMBOLS  = ["SPY","QQQ","AAPL","MSFT","TSLA","NVDA","AMD","GOOGL","META","AMZN","GLD","SLV","KO","PEP"]
-const CRYPTO_SYMBOLS = ["BTC/USD","ETH/USD","SOL/USD"]
+// Symbols to stream - More symbols = more opportunities
+const STOCK_SYMBOLS  = ["SPY","QQQ","AAPL","MSFT","TSLA","NVDA","AMD","GOOGL","META","AMZN","GLD","SLV","KO","PEP","NFLX","PYPL","DIS","BA","CAT","JPM"]
+const CRYPTO_SYMBOLS = ["BTC/USD","ETH/USD","SOL/USD","ADA/USD","DOT/USD"]
 
 const BUFFER_SIZE    = 200   // Keep 200 bars per symbol in memory
-const MIN_BARS       = 35   // Minimum bars needed for analysis
+const MIN_BARS       = 20   // Minimum bars needed for analysis (lowered from 35)
 const POSITION_CHECK_MS = 30_000 // Check positions every 30s
+
+// ─── Trading Parameters ────────────────────────────────────────────────────────────
+const MAX_POSITIONS  = 5     // Max concurrent positions
+const MAX_PER_SYMBOL = 1     // Max positions per symbol
+const COOLDOWN_MS    = 300_000 // 5 min cooldown between trades on same symbol
 
 // ─── State ────────────────────────────────────────────────────────────────────
 const barBuffers = {}  // { "AAPL": [{o,h,l,c,v,t}, ...] }
+const lastTradeTime = {} // { "AAPL": timestamp }
 let equity  = 100000
 let posMap  = {}
 let totalSignals = 0
@@ -222,13 +228,117 @@ function calcVWAP(bars) {
   return cumVol > 0 ? cumTP / cumVol : 0
 }
 
+// ─── ADX (Average Directional Index) ─────────────────────────────────────────────
+
+function calcADX(bars, period = 14) {
+  if (bars.length < period * 2) return 0
+
+  let tr = [], plusDM = [], minusDM = []
+
+  for (let i = 1; i < bars.length; i++) {
+    const high = bars[i].h
+    const low = bars[i].l
+    const prevHigh = bars[i - 1].h
+    const prevLow = bars[i - 1].l
+    const prevClose = bars[i - 1].c
+
+    const trVal = Math.max(high - low, Math.abs(high - prevClose), Math.abs(low - prevClose))
+    tr.push(trVal)
+
+    const upMove = high - prevHigh
+    const downMove = prevLow - low
+
+    plusDM.push(upMove > downMove && upMove > 0 ? upMove : 0)
+    minusDM.push(downMove > upMove && downMove > 0 ? downMove : 0)
+  }
+
+  // Smoothed values
+  const trSmooth = calcEMA(tr, period)
+  const plusDMSmooth = calcEMA(plusDM, period)
+  const minusDMSmooth = calcEMA(minusDM, period)
+
+  const plusDI = trSmooth.map((t, i) => t === 0 ? 0 : (plusDMSmooth[i] / t) * 100)
+  const minusDI = trSmooth.map((t, i) => t === 0 ? 0 : (minusDMSmooth[i] / t) * 100)
+
+  const dx = plusDI.map((pdi, i) => {
+    const di = Math.abs(pdi - minusDI[i])
+    const sum = pdi + minusDI[i]
+    return sum === 0 ? 0 : (di / sum) * 100
+  })
+
+  const adx = calcEMA(dx, period)
+  return adx[adx.length - 1] || 0
+}
+
+// ─── Market Regime Detection ────────────────────────────────────────────────────
+
+function detectMarketRegime(bars, period = 20) {
+  if (bars.length < period * 2) {
+    return { trendStrength: "ranging", volatility: "normal", direction: "neutral", adx: 0, atrPct: 0 }
+  }
+
+  const closes = bars.map(b => b.c)
+
+  // Calculate ADX
+  const adx = calcADX(bars, 14)
+
+  // Calculate ATR as percentage
+  const atr = calcATR(bars, 14)
+  const atrPct = (atr / closes[closes.length - 1]) * 100
+
+  // Trend strength
+  const trendStrength = adx > 30 ? "strong_trend" : adx > 20 ? "weak_trend" : "ranging"
+
+  // Historical ATR for volatility comparison
+  const histAtr = []
+  for (let i = period; i < bars.length; i++) {
+    const slice = bars.slice(i - period, i)
+    histAtr.push((calcATR(slice, 14) / slice[slice.length - 1].c) * 100)
+  }
+  const avgAtr = histAtr.reduce((a, b) => a + b, 0) / histAtr.length
+
+  const volatility = atrPct > avgAtr * 1.5 ? "high" : atrPct < avgAtr * 0.7 ? "low" : "normal"
+
+  // Direction via EMA
+  const ema20 = calcEMA(closes, 20)
+  const ema50 = calcEMA(closes, 50)
+  const emaSlope = ema20[ema20.length - 1] - ema20[Math.max(0, ema20.length - 5)]
+
+  let direction = "neutral"
+  if (ema20[ema20.length - 1] > ema50[ema50.length - 1]) {
+    direction = emaSlope > 0 ? "bullish" : "neutral"
+  } else {
+    direction = emaSlope < 0 ? "bearish" : "neutral"
+  }
+
+  return { trendStrength, volatility, direction, adx, atrPct }
+}
+
 // ─── Signal Analysis ──────────────────────────────────────────────────────────
 
 function analyzeSymbol(symbol, bars) {
   if (bars.length < MIN_BARS) return null
 
+  // Check cooldown
+  const now = Date.now()
+  if (lastTradeTime[symbol] && now - lastTradeTime[symbol] < COOLDOWN_MS) {
+    return null
+  }
+
+  // Check max positions
+  const openPositions = Object.keys(posMap).length
+  if (openPositions >= MAX_POSITIONS) {
+    return null
+  }
+
+  // ─── MARKET REGIME DETECTION ────────────────────────────────────────────────────
+  const regime = detectMarketRegime(bars, 20)
+
   const closes = bars.map(b => b.c)
+  const volumes = bars.map(b => b.v)
   const price  = closes[closes.length - 1]
+  const volume = volumes[volumes.length - 1]
+  const avgVolume = volumes.slice(-20).reduce((a,b) => a+b, 0) / 20
   const atr    = calcATR(bars)
   const rsi    = calcRSI(closes)
   const { macd, signal: macdSig, hist } = calcMACD(closes)
@@ -241,59 +351,196 @@ function analyzeSymbol(symbol, bars) {
   let confidence = 0
   let reason = ""
 
-  // ─── Momentum signals ────────────────────
-  const emaBullish = ema9[ema9.length - 1] > ema21[ema21.length - 1]
-  const emaBearish = ema9[ema9.length - 1] < ema21[ema21.length - 1]
-  
-  const prevCloses = closes.slice(0, -1)
-  const prevHist = calcMACD(prevCloses).hist
-  const macdCrossUp = prevHist <= 0 && hist > 0
-  const macdCrossDn = prevHist >= 0 && hist < 0
+  // ─── ADAPTIVE PARAMETERS BASED ON REGIME ───────────────────────────────────────
+  const isTrending = regime.trendStrength === "strong_trend" || regime.trendStrength === "weak_trend"
+  const isRanging = regime.trendStrength === "ranging"
+  const isHighVol = regime.volatility === "high"
+  const isBullish = regime.direction === "bullish"
+  const isBearish = regime.direction === "bearish"
 
-  if (emaBullish && macdCrossUp && rsi < 70 && price >= vwap) {
-    action = "buy"
-    confidence = 0.75
-    reason = `Uptrend (EMA9>21) + MACD Crossover ↑ | RSI ${rsi.toFixed(0)}`
-  } else if (emaBearish && macdCrossDn && rsi > 30 && price <= vwap) {
-    action = "sell"
-    confidence = 0.75
-    reason = `Downtrend (EMA9<21) + MACD Crossover ↓ | RSI ${rsi.toFixed(0)}`
+  // Adjust thresholds based on regime
+  const momentumThreshold = isTrending ? 0.5 : 0.7  // Easier momentum in trending
+  const reversionThreshold = isRanging ? 0.3 : 0.5  // Easier reversion in ranging
+  const volumeMult = isHighVol ? 1.3 : 1.5          // Lower volume requirement in high vol
+
+  // ─── VOLUME SPIKE DETECTION ────────────────────────────────────────────────────
+  const volumeSpike = volume > avgVolume * volumeMult
+  const volumeVeryHigh = volume > avgVolume * (volumeMult * 1.3)
+
+  // ─── REGIME-AWARE MOMENTUM SIGNALS ──────────────────────────────────────────────
+  if (isTrending && regime.confidence > 0.6) {
+    const emaBullish = ema9[ema9.length - 1] > ema21[ema21.length - 1]
+    const emaBearish = ema9[ema9.length - 1] < ema21[ema21.length - 1]
+
+    const prevCloses = closes.slice(0, -1)
+    const prevHist = calcMACD(prevCloses).hist
+    const macdCrossUp = prevHist <= 0 && hist > 0
+    const macdCrossDn = prevHist >= 0 && hist < 0
+
+    // Strong trend aligned momentum (best signal)
+    if (emaBullish && isBullish && macdCrossUp && rsi < 75 && volumeSpike) {
+      action = "buy"
+      confidence = Math.min(0.9, 0.6 + (regime.adx / 100) * 0.3)
+      reason = `Strong Trend Momentum ADX=${regime.adx.toFixed(0)} ${regime.direction} | RSI ${rsi.toFixed(0)}`
+    }
+    else if (emaBearish && isBearish && macdCrossDn && rsi > 25 && volumeSpike) {
+      action = "sell"
+      confidence = Math.min(0.9, 0.6 + (regime.adx / 100) * 0.3)
+      reason = `Strong Trend Momentum ADX=${regime.adx.toFixed(0)} ${regime.direction} | RSI ${rsi.toFixed(0)}`
+    }
+    // Trend continuation
+    else if (isBullish && emaBullish && rsi > 50 && rsi < 70 && price > middle) {
+      action = "buy"
+      confidence = 0.65
+      reason = `Bullish Trend Cont. ADX=${regime.adx.toFixed(0)} | RSI ${rsi.toFixed(0)}`
+    }
+    else if (isBearish && emaBearish && rsi < 50 && rsi > 30 && price < middle) {
+      action = "sell"
+      confidence = 0.65
+      reason = `Bearish Trend Cont. ADX=${regime.adx.toFixed(0)} | RSI ${rsi.toFixed(0)}`
+    }
   }
 
-  // ─── Mean reversion signals ──────────────
-  if (!action && price <= lower && rsi < 35) {
-    action = "buy"
-    confidence = 0.65
-    reason = `Oversold: RSI ${rsi.toFixed(0)}, touch BB lower (${lower.toFixed(2)})`
-  } else if (!action && price >= upper && rsi > 65) {
-    action = "sell"
-    confidence = 0.65
-    reason = `Overbought: RSI ${rsi.toFixed(0)}, touch BB upper (${upper.toFixed(2)})`
+  // ─── REGIME-AWARE MEAN REVERSION SIGNALS ────────────────────────────────────────
+  if (!action && isRanging) {
+    const bbPosition = (price - lower) / (upper - lower)
+
+    // Deep oversold in ranging market (great signal)
+    if (bbPosition < reversionThreshold && rsi < 40) {
+      action = "buy"
+      confidence = Math.min(0.9, 0.65 + (1 - bbPosition) * 0.25)
+      reason = `Ranging: Deep Oversold BB${(bbPosition*100).toFixed(0)}% | RSI ${rsi.toFixed(0)}`
+    }
+    // Deep overbought in ranging market
+    else if (bbPosition > (1 - reversionThreshold) && rsi > 60) {
+      action = "sell"
+      confidence = Math.min(0.9, 0.65 + bbPosition * 0.25)
+      reason = `Ranging: Deep Overbought BB${(bbPosition*100).toFixed(0)}% | RSI ${rsi.toFixed(0)}`
+    }
+    // Z-score entry
+    else {
+      const mean = closes.slice(-20).reduce((a,b) => a+b, 0) / 20
+      const std = Math.sqrt(closes.slice(-20).reduce((a,b) => a + (b-mean)**2, 0) / 20)
+      const z = (price - mean) / (std || 1)
+
+      if (z < -2 && rsi < 45) {
+        action = "buy"
+        confidence = 0.7
+        reason = `Z-score ${z.toFixed(2)} oversold | RSI ${rsi.toFixed(0)}`
+      }
+      else if (z > 2 && rsi > 55) {
+        action = "sell"
+        confidence = 0.7
+        reason = `Z-score ${z.toFixed(2)} overbought | RSI ${rsi.toFixed(0)}`
+      }
+    }
   }
 
-  if (!action) return null
+  // ─── VOLATILITY-ADAPTED BREAKOUTS ───────────────────────────────────────────────
+  if (!action && isHighVol) {
+    const prevHigh = bars[bars.length - 2].h
+    const prevLow = bars[bars.length - 2].l
+    const currHigh = bars[bars.length - 1].h
+    const currLow = bars[bars.length - 1].l
 
-  // Position sizing: risk 1% of equity per ATR
-  const riskDollars = equity * 0.01
-  const slDistance  = atr * 1.0
-  const qty         = Math.max(1, Math.floor(riskDollars / slDistance))
-  const maxByPct    = Math.floor((equity * 0.05) / price)
-  const finalQty    = Math.min(qty, maxByPct)
+    // Breakout with volume
+    if (currHigh > prevHigh * 1.002 && volumeVeryHigh && rsi < 75) {
+      action = "buy"
+      confidence = 0.7
+      reason = `Volatility Breakout UP + High Vol | RSI ${rsi.toFixed(0)}`
+    }
+    else if (currLow < prevLow * 0.998 && volumeVeryHigh && rsi > 25) {
+      action = "sell"
+      confidence = 0.7
+      reason = `Volatility Breakout DOWN + High Vol | RSI ${rsi.toFixed(0)}`
+    }
+  }
 
-  const tpPrice = action === "buy" ? price + atr * 2.0 : price - atr * 2.0
-  const slPrice = action === "buy" ? price - atr * 1.0 : price + atr * 1.0
+  // ─── PRICE ACTION PATTERNS (work in all regimes) ───────────────────────────────
+  if (!action) {
+    const prevBar = bars[bars.length - 2]
+    const bar = bars[bars.length - 1]
+    const bodySize = Math.abs(bar.c - bar.o)
+    const prevBodySize = Math.abs(prevBar.c - prevBar.o)
+
+    // Strong bullish candle
+    if (bar.c > bar.o && bodySize > prevBodySize * 1.2 &&
+        bar.c > prevBar.h && volumeSpike && rsi < 75) {
+      action = "buy"
+      confidence = 0.7
+      reason = `Strong Bullish Candle + Volume`
+    }
+    // Strong bearish candle
+    else if (bar.c < bar.o && bodySize > prevBodySize * 1.2 &&
+             bar.c < prevBar.l && volumeSpike && rsi > 25) {
+      action = "sell"
+      confidence = 0.7
+      reason = `Strong Bearish Candle + Volume`
+    }
+  }
+
+  // ─── VWAP BOUNCE (works well in all regimes) ───────────────────────────────────
+  if (!action) {
+    const prevPrice = closes[closes.length - 2]
+    const bouncedOffVWAP = (prevPrice < vwap && price > vwap) ||
+                           (prevPrice > vwap && price < vwap)
+
+    if (bouncedOffVWAP && volumeSpike) {
+      action = price > vwap ? "buy" : "sell"
+      confidence = 0.6
+      reason = `VWAP Bounce + Volume | RSI ${rsi.toFixed(0)}`
+    }
+  }
+
+  // ─── MULTI-BAR MOMENTUM (check last 3 bars) ────────────────────────────────────
+  if (!action && bars.length >= 4) {
+    const last3Closes = closes.slice(-3)
+    const consecutiveUp = last3Closes.every((c, i) => i === 0 || c > last3Closes[i-1])
+    const consecutiveDown = last3Closes.every((c, i) => i === 0 || c < last3Closes[i-1])
+
+    if (consecutiveUp && volumeVeryHigh && rsi < 70) {
+      action = "buy"
+      confidence = 0.65
+      reason = `3-Bar Up Trend + High Volume | RSI ${rsi.toFixed(0)}`
+    }
+    else if (consecutiveDown && volumeVeryHigh && rsi > 30) {
+      action = "sell"
+      confidence = 0.65
+      reason = `3-Bar Down Trend + High Volume | RSI ${rsi.toFixed(0)}`
+    }
+  }
+
+  if (!action || confidence < 0.5) return null
+
+  // ─── VOLATILITY-ADAPTED POSITION SIZING ─────────────────────────────────────────
+  const baseRisk = equity * 0.01
+  const volAdjustedRisk = isHighVol ? baseRisk * 0.7 : baseRisk
+  const slDistance = atr * (isHighVol ? 2.0 : 1.5)
+  const tpDistance = atr * (isHighVol ? 3.0 : 2.5)
+
+  const qty = Math.max(1, Math.floor(volAdjustedRisk / slDistance))
+  const maxByPct = Math.floor((equity * 0.05) / price)
+  const finalQty = Math.min(qty, maxByPct)
+
+  const tpPrice = action === "buy" ? price + tpDistance : price - tpDistance
+  const slPrice = action === "buy" ? price - slDistance : price + slDistance
 
   return {
     symbol, action, confidence, reason, price, atr,
-    qty: Math.max(1, finalQty), tpPrice, slPrice
+    qty: Math.max(1, finalQty), tpPrice, slPrice,
+    regime: `${regime.trendStrength}_${regime.direction}`  // Add regime info
   }
 }
 
 // ─── Execute Trade ────────────────────────────────────────────────────────────
 
 async function executeTrade(signal) {
+  // Record trade time for cooldown
+  lastTradeTime[signal.symbol] = Date.now()
+
   if (DRY_RUN) {
-    const msg = `🔍 *[DRY]* ${signal.action === "buy" ? "🟢 BUY" : "🔴 SELL"} *${signal.symbol}* x${signal.qty}\nPrice: $${signal.price.toFixed(2)}\nStrategy: ${best.strategy}\nReason: ${signal.reason}`
+    const regimeInfo = signal.regime ? `\nRegime: \`${signal.regime}\`` : ""
+    const msg = `🔍 *[DRY]* ${signal.action === "buy" ? "🟢 BUY" : "🔴 SELL"} *${signal.symbol}* x${signal.qty}\nPrice: $${signal.price.toFixed(2)}\nConfidence: ${(signal.confidence * 100).toFixed(0)}%\nReason: ${signal.reason}${regimeInfo}`
     log("TRADE", `${C.yellow}[DRY]${C.reset} ${signal.action.toUpperCase()} ${signal.symbol} x${signal.qty} | TP: $${signal.tpPrice.toFixed(2)} SL: $${signal.slPrice.toFixed(2)} | ${signal.reason}`)
     broadcastTelegram(msg)
     totalTrades++
@@ -314,7 +561,8 @@ async function executeTrade(signal) {
     const result = await alpacaFetch("/orders", "POST", order)
 
     if (result.id) {
-      const msg = `🚀 *[LIVE]* ${signal.action === "buy" ? "🟢 BUY" : "🔴 SELL"} *${signal.symbol}* x${signal.qty}\nPrice: $${signal.price.toFixed(2)}\nTP: $${signal.tpPrice.toFixed(2)} | SL: $${signal.slPrice.toFixed(2)}\nOrder: ${result.id.slice(0,8)}`
+      const regimeInfo = signal.regime ? `\nRegime: \`${signal.regime}\`` : ""
+      const msg = `🚀 *[LIVE]* ${signal.action === "buy" ? "🟢 BUY" : "🔴 SELL"} *${signal.symbol}* x${signal.qty}\nPrice: $${signal.price.toFixed(2)}\nTP: $${signal.tpPrice.toFixed(2)} | SL: $${signal.slPrice.toFixed(2)}\nOrder: ${result.id.slice(0,8)}${regimeInfo}`
       log("TRADE", `${C.green}[LIVE]${C.reset} ${signal.action.toUpperCase()} ${signal.symbol} x${signal.qty} | Order ${result.id.slice(0,8)} | TP: $${signal.tpPrice.toFixed(2)} SL: $${signal.slPrice.toFixed(2)}`)
       broadcastTelegram(msg)
       totalTrades++

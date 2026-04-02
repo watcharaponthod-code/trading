@@ -145,7 +145,7 @@ export function runStatArb(
   if (symbols.length < 2) return signals
 
   const period = Number(config.params.period) || 20
-  const zThreshold = Number(config.params.zThreshold) || 2.0
+  const zThreshold = Number(config.params.zThreshold) || 1.5  // Lowered from 2.0
   const qty = Number(config.params.qty) || 1
 
   const [sym1, sym2] = symbols
@@ -162,16 +162,25 @@ export function runStatArb(
 
   const pos1 = positionsBySymbol[sym1] || 0
   const pos2 = positionsBySymbol[sym2] || 0
+  const hasPositions = pos1 !== 0 || pos2 !== 0
 
-  if (Math.abs(latestZ) < 0.5) {
-    if (pos1 > 0) signals.push({ symbol: sym1, action: "sell", qty: pos1, reason: "Stat Arb: spread normalized", confidence: 0.7 })
-    if (pos2 > 0) signals.push({ symbol: sym2, action: "sell", qty: pos2, reason: "Stat Arb: spread normalized", confidence: 0.7 })
-  } else if (latestZ > zThreshold && pos1 === 0) {
-    signals.push({ symbol: sym1, action: "sell", qty, reason: `Stat Arb: spread high (z=${latestZ.toFixed(2)}, corr=${correlation.toFixed(2)})`, confidence: Math.min(0.95, Math.abs(latestZ) / 4) })
-    signals.push({ symbol: sym2, action: "buy", qty, reason: `Stat Arb: spread high (z=${latestZ.toFixed(2)})`, confidence: Math.min(0.95, Math.abs(latestZ) / 4) })
-  } else if (latestZ < -zThreshold && pos2 === 0) {
-    signals.push({ symbol: sym1, action: "buy", qty, reason: `Stat Arb: spread low (z=${latestZ.toFixed(2)}, corr=${correlation.toFixed(2)})`, confidence: Math.min(0.95, Math.abs(latestZ) / 4) })
-    signals.push({ symbol: sym2, action: "sell", qty, reason: `Stat Arb: spread low (z=${latestZ.toFixed(2)})`, confidence: Math.min(0.95, Math.abs(latestZ) / 4) })
+  // Close positions when spread normalizes (lower threshold for exit)
+  if (hasPositions && Math.abs(latestZ) < 0.3) {
+    if (pos1 > 0) signals.push({ symbol: sym1, action: "sell", qty: pos1, reason: "Stat Arb: spread normalized", confidence: 0.75 })
+    if (pos2 > 0) signals.push({ symbol: sym2, action: "sell", qty: pos2, reason: "Stat Arb: spread normalized", confidence: 0.75 })
+  }
+  // Entry when spread widens (lower threshold for entry)
+  else if (!hasPositions && Math.abs(latestZ) > zThreshold) {
+    const confidence = Math.min(0.9, 0.5 + Math.abs(latestZ) / 6)
+    if (latestZ > 0) {
+      // Spread high: short sym1, long sym2
+      signals.push({ symbol: sym1, action: "sell", qty, reason: `Stat Arb: spread high z=${latestZ.toFixed(2)} corr=${correlation.toFixed(2)}`, confidence })
+      signals.push({ symbol: sym2, action: "buy", qty, reason: `Stat Arb: hedge long`, confidence })
+    } else {
+      // Spread low: long sym1, short sym2
+      signals.push({ symbol: sym1, action: "buy", qty, reason: `Stat Arb: spread low z=${latestZ.toFixed(2)} corr=${correlation.toFixed(2)}`, confidence })
+      signals.push({ symbol: sym2, action: "sell", qty, reason: `Stat Arb: hedge short`, confidence })
+    }
   }
 
   return signals
@@ -186,26 +195,75 @@ export function runMeanReversion(
   const period = Number(config.params.period) || 20
   const bbMult = Number(config.params.bbMultiplier) || 2.0
   const qty = Number(config.params.qty) || 1
-  const rsiOversold = Number(config.params.rsiOversold) || 30
-  const rsiOverbought = Number(config.params.rsiOverbought) || 70
+  const rsiOversold = Number(config.params.rsiOversold) || 35  // Relaxed from 30
+  const rsiOverbought = Number(config.params.rsiOverbought) || 65  // Relaxed from 70
 
   for (const symbol of config.symbols) {
     const bars = barsBySymbol[symbol] || []
     if (bars.length < period + 14) continue
 
     const closes = bars.map((b) => b.c)
-    const { upper, lower } = calcBollingerBands(closes, period, bbMult)
+    const { upper, lower, middle } = calcBollingerBands(closes, period, bbMult)
     const rsi = calcRSI(closes, 14)
     const lastClose = closes[closes.length - 1]
     const lastRSI = rsi[rsi.length - 1]
     const lastUpper = upper[upper.length - 1]
     const lastLower = lower[lower.length - 1]
+    const lastMiddle = middle[middle.length - 1]
     const pos = positionsBySymbol[symbol] || 0
 
-    if (lastClose <= lastLower && lastRSI < rsiOversold && pos === 0) {
-      signals.push({ symbol, action: "buy", qty, reason: `Mean Rev: price at lower BB (RSI=${lastRSI.toFixed(0)})`, confidence: Math.min(0.9, (rsiOversold - lastRSI) / 30 + 0.5) })
-    } else if (lastClose >= lastUpper && lastRSI > rsiOverbought && pos > 0) {
-      signals.push({ symbol, action: "sell", qty: pos, reason: `Mean Rev: price at upper BB (RSI=${lastRSI.toFixed(0)})`, confidence: Math.min(0.9, (lastRSI - rsiOverbought) / 30 + 0.5) })
+    // Calculate BB position (0-1 range)
+    const bbPosition = (lastClose - lastLower) / (lastUpper - lastLower)
+
+    // Deep oversold (bottom 10% of BB)
+    if (bbPosition < 0.1 && lastRSI < 45 && pos === 0) {
+      signals.push({
+        symbol,
+        action: "buy",
+        qty,
+        reason: `Mean Rev: Deep oversold BB${(bbPosition*100).toFixed(0)}% RSI=${lastRSI.toFixed(0)}`,
+        confidence: Math.min(0.9, 0.6 + (0.3 * (1 - bbPosition)))
+      })
+    }
+    // Deep overbought (top 10% of BB)
+    else if (bbPosition > 0.9 && lastRSI > 55 && pos > 0) {
+      signals.push({
+        symbol,
+        action: "sell",
+        qty: pos,
+        reason: `Mean Rev: Deep overbought BB${(bbPosition*100).toFixed(0)}% RSI=${lastRSI.toFixed(0)}`,
+        confidence: Math.min(0.9, 0.6 + (0.3 * bbPosition))
+      })
+    }
+    // Entry at lower BB with RSI confirmation
+    else if (lastClose <= lastLower && lastRSI < rsiOversold && pos === 0) {
+      signals.push({
+        symbol,
+        action: "buy",
+        qty,
+        reason: `Mean Rev: Lower BB RSI=${lastRSI.toFixed(0)}`,
+        confidence: Math.min(0.85, (rsiOversold - lastRSI) / 20 + 0.5)
+      })
+    }
+    // Entry at upper BB with RSI confirmation
+    else if (lastClose >= lastUpper && lastRSI > rsiOverbought && pos > 0) {
+      signals.push({
+        symbol,
+        action: "sell",
+        qty: pos,
+        reason: `Mean Rev: Upper BB RSI=${lastRSI.toFixed(0)}`,
+        confidence: Math.min(0.85, (lastRSI - rsiOverbought) / 20 + 0.5)
+      })
+    }
+    // Exit when returning to mean
+    else if (pos > 0 && Math.abs(lastClose - lastMiddle) < (lastUpper - lastLower) * 0.1) {
+      signals.push({
+        symbol,
+        action: "sell",
+        qty: pos,
+        reason: `Mean Rev: Return to mean`,
+        confidence: 0.7
+      })
     }
   }
   return signals
@@ -217,8 +275,8 @@ export function runMomentum(
   positionsBySymbol: Record<string, number>
 ): TradeSignal[] {
   const signals: TradeSignal[] = []
-  const fastPeriod = Number(config.params.fastPeriod) || 10
-  const slowPeriod = Number(config.params.slowPeriod) || 30
+  const fastPeriod = Number(config.params.fastPeriod) || 9
+  const slowPeriod = Number(config.params.slowPeriod) || 21
   const qty = Number(config.params.qty) || 1
 
   for (const symbol of config.symbols) {
@@ -226,22 +284,64 @@ export function runMomentum(
     if (bars.length < slowPeriod + 5) continue
 
     const closes = bars.map((b) => b.c)
+    const volumes = bars.map((b) => b.v)
     const fastEMA = calcEMA(closes, fastPeriod)
     const slowEMA = calcEMA(closes, slowPeriod)
+    const rsi = calcRSI(closes, 14)
     const pos = positionsBySymbol[symbol] || 0
 
     const prevFast = fastEMA[fastEMA.length - 2]
     const prevSlow = slowEMA[slowEMA.length - 2]
     const currFast = fastEMA[fastEMA.length - 1]
     const currSlow = slowEMA[slowEMA.length - 1]
+    const lastRSI = rsi[rsi.length - 1]
+    const lastVolume = volumes[volumes.length - 1]
+    const avgVolume = volumes.slice(-20).reduce((a,b) => a+b, 0) / 20
 
     const crossedAbove = prevFast <= prevSlow && currFast > currSlow
     const crossedBelow = prevFast >= prevSlow && currFast < currSlow
+    const volumeSpike = lastVolume > avgVolume * 1.3
 
-    if (crossedAbove && pos === 0) {
-      signals.push({ symbol, action: "buy", qty, reason: `Momentum: EMA${fastPeriod} crossed above EMA${slowPeriod}`, confidence: 0.75 })
-    } else if (crossedBelow && pos > 0) {
-      signals.push({ symbol, action: "sell", qty: pos, reason: `Momentum: EMA${fastPeriod} crossed below EMA${slowPeriod}`, confidence: 0.75 })
+    // Strong bullish momentum
+    if (crossedAbove && pos === 0 && lastRSI < 75) {
+      const confidence = volumeSpike ? 0.85 : 0.75
+      signals.push({
+        symbol,
+        action: "buy",
+        qty,
+        reason: `Momentum: EMA${fastPeriod}>EMA${slowPeriod} ${volumeSpike ? '+Vol' : ''} RSI=${lastRSI.toFixed(0)}`,
+        confidence
+      })
+    }
+    // Strong bearish momentum
+    else if (crossedBelow && pos > 0 && lastRSI > 25) {
+      signals.push({
+        symbol,
+        action: "sell",
+        qty: pos,
+        reason: `Momentum: EMA${fastPeriod}<EMA${slowPeriod} RSI=${lastRSI.toFixed(0)}`,
+        confidence: 0.75
+      })
+    }
+    // Trend continuation (already in bullish trend)
+    else if (currFast > currSlow && pos === 0 && lastRSI > 50 && lastRSI < 70) {
+      signals.push({
+        symbol,
+        action: "buy",
+        qty,
+        reason: `Momentum: Trend continuation RSI=${lastRSI.toFixed(0)}`,
+        confidence: 0.6
+      })
+    }
+    // Exit when momentum fades
+    else if (pos > 0 && currFast < currSlow && lastRSI < 50) {
+      signals.push({
+        symbol,
+        action: "sell",
+        qty: pos,
+        reason: `Momentum: Trend faded`,
+        confidence: 0.7
+      })
     }
   }
   return signals
@@ -272,27 +372,27 @@ export const DEFAULT_STRATEGIES: StrategyConfig[] = [
     name: "Statistical Arbitrage",
     description: "Exploits mean-reverting spread between two correlated assets using z-score analysis.",
     symbols: ["SPY", "QQQ"],
-    params: { period: 20, zThreshold: 2.0, qty: 1 },
+    params: { period: 20, zThreshold: 1.5, qty: 2 },  // More aggressive
   },
   {
     id: "mean_reversion",
     name: "Mean Reversion",
     description: "Buys oversold and sells overbought conditions using Bollinger Bands + RSI confirmation.",
-    symbols: ["AAPL", "MSFT", "GOOGL"],
-    params: { period: 20, bbMultiplier: 2.0, rsiOversold: 30, rsiOverbought: 70, qty: 1 },
+    symbols: ["AAPL", "MSFT", "GOOGL", "META", "TSLA"],  // More symbols
+    params: { period: 20, bbMultiplier: 2.0, rsiOversold: 35, rsiOverbought: 65, qty: 1 },  // Relaxed thresholds
   },
   {
     id: "momentum",
     name: "EMA Momentum",
     description: "Trades EMA crossovers to capture short-term momentum in trending assets.",
-    symbols: ["TSLA", "NVDA", "AMD"],
-    params: { fastPeriod: 10, slowPeriod: 30, qty: 1 },
+    symbols: ["NVDA", "AMD", "TSLA", "SOXL", "QQQ"],  // High volatility symbols
+    params: { fastPeriod: 9, slowPeriod: 21, qty: 2 },  // Faster EMAs, more qty
   },
   {
     id: "pairs_trading",
     name: "Pairs Trading",
     description: "Long/short pairs strategy on highly correlated stocks to capture convergence.",
     symbols: ["GLD", "SLV"],
-    params: { period: 30, zThreshold: 1.8, qty: 2 },
+    params: { period: 20, zThreshold: 1.2, qty: 3 },  // Very aggressive
   },
 ]

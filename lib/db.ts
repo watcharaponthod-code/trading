@@ -98,15 +98,25 @@ export async function runMigrations() {
         CREATE INDEX IF NOT EXISTS idx_trades_created_at ON trades(created_at DESC);
         CREATE INDEX IF NOT EXISTS idx_portfolio_created_at ON portfolio_snapshots(created_at DESC);
         CREATE INDEX IF NOT EXISTS idx_signals_created_at ON trade_signals(created_at DESC);
+
+        CREATE TABLE IF NOT EXISTS telegram_chats (
+          chat_id TEXT PRIMARY KEY,
+          username TEXT,
+          created_at TIMESTAMPTZ DEFAULT NOW()
+        );
       `)
 
       const strategies = [
-        ["stat_arb", "Statistical Arbitrage", "Z-score spread trading", '["SPY", "QQQ"]', '{"period": 20, "zThreshold": 2.0, "qty": 1}'],
-        ["mean_reversion", "Mean Reversion", "Bollinger Bands + RSI", '["AAPL", "MSFT"]', '{"period": 20, "bbMultiplier": 2.0, "rsiOversold": 35, "rsiOverbought": 65, "qty": 1}'],
-        ["momentum", "EMA Momentum", "EMA crossover/trend", '["TSLA", "NVDA"]', '{"fastPeriod": 9, "slowPeriod": 21, "qty": 1}']
+        ["stat_arb", "Statistical Arbitrage", "Z-score spread trading", '{"period": 20, "zThreshold": 2.0, "qty": 1}', ["SPY", "QQQ"]],
+        ["mean_reversion", "Mean Reversion", "Bollinger Bands + RSI", '{"period": 20, "bbMultiplier": 2.0, "rsiOversold": 35, "rsiOverbought": 65, "qty": 1}', ["AAPL", "MSFT"]],
+        ["momentum", "EMA Momentum", "EMA crossover/trend", '{"fastPeriod": 9, "slowPeriod": 21, "qty": 1}', ["TSLA", "NVDA"]]
       ]
       for (const s of strategies) {
-        await client.query("INSERT INTO strategy_configs (strategy_id, name, description, symbols, params) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (strategy_id) DO NOTHING", s)
+        const [strategyId, name, description, params, symbols] = s
+        await client.query(
+          "INSERT INTO strategy_configs (strategy_id, name, description, symbols, params) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (strategy_id) DO NOTHING",
+          [strategyId, name, description, JSON.stringify(symbols), params]
+        )
       }
       console.log("[postgres] Migration complete")
     } finally {
@@ -119,6 +129,7 @@ export async function runMigrations() {
       CREATE TABLE IF NOT EXISTS strategy_configs (id INTEGER PRIMARY KEY AUTOINCREMENT, strategy_id TEXT NOT NULL UNIQUE, name TEXT NOT NULL, description TEXT, symbols TEXT NOT NULL DEFAULT '[]', params TEXT NOT NULL DEFAULT '{}', is_active INTEGER DEFAULT 0, auto_execute INTEGER DEFAULT 0, created_at TEXT DEFAULT (datetime('now')), updated_at TEXT DEFAULT (datetime('now')));
       CREATE TABLE IF NOT EXISTS portfolio_snapshots (id INTEGER PRIMARY KEY AUTOINCREMENT, equity REAL NOT NULL, cash REAL NOT NULL, buying_power REAL, portfolio_value REAL, profit_loss REAL, profit_loss_pct REAL, created_at TEXT DEFAULT (datetime('now')));
       CREATE TABLE IF NOT EXISTS trade_signals (id INTEGER PRIMARY KEY AUTOINCREMENT, strategy_id TEXT NOT NULL, symbol TEXT NOT NULL, action TEXT NOT NULL, qty REAL NOT NULL, reason TEXT, confidence REAL, price_at_signal REAL, was_executed INTEGER DEFAULT 0, trade_id INTEGER REFERENCES trades(id), created_at TEXT DEFAULT (datetime('now')));
+      CREATE TABLE IF NOT EXISTS telegram_chats (chat_id TEXT PRIMARY KEY, username TEXT, created_at TEXT DEFAULT (datetime('now')));
     `)
     const seed = db.prepare("INSERT OR IGNORE INTO strategy_configs (strategy_id, name, description, symbols, params) VALUES (?, ?, ?, ?, ?)")
     seed.run("stat_arb", "Statistical Arbitrage", "Z-score spread trading", '["SPY", "QQQ"]', '{"period": 20, "zThreshold": 2.0, "qty": 1}')
@@ -277,4 +288,26 @@ export async function getTradeSignals(limit = 100): Promise<any[]> {
   const db = getDb()
   if (isPostgres) return (await (db as Pool).query("SELECT * FROM trade_signals ORDER BY created_at DESC LIMIT $1", [limit])).rows
   return (db as Database.Database).prepare("SELECT * FROM trade_signals ORDER BY created_at DESC LIMIT ?").all(limit)
+}
+
+// ─── Telegram Helpers ─────────────────────────────────────────────────────────
+
+export async function upsertTelegramChat(chatId: string, username?: string): Promise<void> {
+  const db = getDb()
+  if (isPostgres) {
+    await (db as Pool).query(
+      "INSERT INTO telegram_chats (chat_id, username) VALUES ($1, $2) ON CONFLICT (chat_id) DO UPDATE SET username = EXCLUDED.username",
+      [chatId, username || null]
+    )
+  } else {
+    (db as Database.Database).prepare("INSERT OR REPLACE INTO telegram_chats (chat_id, username) VALUES (?, ?)").run(chatId, username || null)
+  }
+}
+
+export async function getAllTelegramChats(): Promise<string[]> {
+  const db = getDb()
+  const rows = isPostgres 
+    ? (await (db as Pool).query("SELECT chat_id FROM telegram_chats")).rows 
+    : (db as Database.Database).prepare("SELECT chat_id FROM telegram_chats").all() as any[]
+  return rows.map(r => r.chat_id)
 }

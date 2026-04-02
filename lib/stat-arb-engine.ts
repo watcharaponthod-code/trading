@@ -108,13 +108,13 @@ export interface StatArbConfig {
 }
 
 export const DEFAULT_STAT_ARB_CONFIG: StatArbConfig = {
-  entryZ: 2.0,
-  exitZ: 0.5,
-  stopZ: 3.5,
-  lookback: 30,
-  minCorrelation: 0.75,
-  qtyA: 1,
-  qtyB: 1,
+  entryZ: 1.5,    // Lowered from 2.0 - more entry opportunities
+  exitZ: 0.3,     // Lowered from 0.5 - quicker exits
+  stopZ: 3.0,     // Lowered from 3.5 - tighter stops
+  lookback: 20,   // Shorter period - more responsive
+  minCorrelation: 0.6,  // Lowered from 0.75 - more pairs qualify
+  qtyA: 2,        // Increased position size
+  qtyB: 2,
 }
 
 export interface OrderInstruction {

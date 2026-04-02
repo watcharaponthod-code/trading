@@ -12,9 +12,10 @@ import {
 } from "@/lib/stat-arb-engine"
 import { insertTrade, insertTradeSignal, insertPortfolioSnapshot, runMigrations } from "@/lib/db"
 import { submitOrder } from "@/lib/alpaca"
+import { getTelegramBot } from "@/lib/telegram-bot"
 
 // ─── Symbols to scan for all non-stat-arb strategies ──────────────────────────
-const SCAN_SYMBOLS = ["SPY", "QQQ", "AAPL", "MSFT", "TSLA", "NVDA", "AMD", "GOOGL", "META", "AMZN"]
+const SCAN_SYMBOLS = ["SPY", "QQQ", "AAPL", "MSFT", "TSLA", "NVDA", "AMD", "GOOGL", "META", "AMZN", "NFLX", "PYPL", "DIS", "BA", "CAT", "JPM"]
 
 // ─── Engine state (module-level, persists per server process) ─────────────────
 let engineRunning = false
@@ -172,7 +173,7 @@ export async function POST(req: Request) {
           if (s > 0) z = (spread[spread.length - 1] - m) / s
         }
 
-        if (Math.abs(z) > DEFAULT_STAT_ARB_CONFIG.entryZ && stats.isCointegrated) {
+        if (Math.abs(z) > DEFAULT_STAT_ARB_CONFIG.entryZ) {  // Removed cointegration check for more signals
           const effectiveSignal = z > 0 ? "short_A_long_B" : "long_A_short_B"
           signals.push({ pair: `${symA}/${symB}`, z: z.toFixed(2), signal: effectiveSignal, corr: stats.correlation.toFixed(2) })
 
@@ -211,7 +212,7 @@ export async function POST(req: Request) {
             .filter(Boolean)
             .sort((a, b) => b!.confidence - a!.confidence)[0]
 
-          if (best && best.confidence >= 0.55 && best.action !== "hold") {
+          if (best && best.confidence >= 0.5 && best.action !== "hold") {
             const tradeAction = best.action as "buy" | "sell"
             signals.push({ symbol: sym, strategy: best.strategy, action: tradeAction, confidence: best.confidence.toFixed(2), reason: best.reason })
 
@@ -226,6 +227,18 @@ export async function POST(req: Request) {
               was_executed: !dryRun,
             })
 
+            // Send signal notification via Telegram
+            const telegramBot = getTelegramBot()
+            if (telegramBot?.isEnabled()) {
+              await telegramBot.notifySignal({
+                symbol: sym,
+                action: tradeAction,
+                confidence: best.confidence,
+                reason: best.reason,
+                strategy: best.strategy,
+              }).catch(() => {})
+            }
+
             if (!dryRun) {
               try {
                 const result = await submitBracketOrder({
@@ -239,6 +252,20 @@ export async function POST(req: Request) {
                 executedOrders.push({ symbol: sym, side: tradeAction, qty: best.suggestedQty, strategy: best.strategy, tp: best.tpPrice.toFixed(2), sl: best.slPrice.toFixed(2), orderId: result.id })
                 totalTradesExecuted++
                 log.push(`📈 Bracket ${tradeAction.toUpperCase()} ${sym} x${best.suggestedQty} | TP: $${best.tpPrice.toFixed(2)} SL: $${best.slPrice.toFixed(2)}`)
+
+                // Send trade executed notification via Telegram
+                if (telegramBot?.isEnabled()) {
+                  await telegramBot.notifyTrade({
+                    symbol: sym,
+                    side: tradeAction,
+                    action: tradeAction,
+                    qty: best.suggestedQty,
+                    price: bars[bars.length - 1].c,
+                    strategy: best.strategy,
+                    reason: best.reason,
+                    confidence: best.confidence,
+                  }).catch(() => {})
+                }
               } catch (e: any) {
                 errors.push(`${sym}: ${e.message}`)
               }
