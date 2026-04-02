@@ -1,14 +1,4 @@
 {
-  "crons": [
-    {
-      "path": "/api/auto-trader",
-      "schedule": "* * * * *"
-    },
-    {
-      "path": "/api/crypto-trader",
-      "schedule": "*/2 * * * *"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
