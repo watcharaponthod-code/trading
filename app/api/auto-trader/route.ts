@@ -45,7 +45,7 @@ export async function GET() {
 // ─── POST — run one full engine cycle ─────────────────────────────────────────
 export async function POST(req: Request) {
   try {
-    runMigrations()
+    await runMigrations()
     const body = await req.json().catch(() => ({}))
     const dryRun: boolean = body.dryRun !== false
     const config: RiskConfig = { ...DEFAULT_RISK_CONFIG, ...(body.riskConfig || {}) }
@@ -181,7 +181,7 @@ export async function POST(req: Request) {
             for (const o of orders) {
               try {
                 const result = await submitOrder({ symbol: o.symbol, qty: o.qty, side: o.side, type: "market", time_in_force: "day" })
-                insertTrade({ symbol: o.symbol, side: o.side, qty: o.qty, order_id: result.id, status: result.status, strategy_id: "stat_arb", signal_reason: o.reason })
+                await insertTrade({ symbol: o.symbol, side: o.side, qty: o.qty, order_id: result.id, status: result.status, strategy_id: "stat_arb", signal_reason: o.reason })
                 executedOrders.push({ ...o, orderId: result.id, pair: `${symA}/${symB}` })
                 totalTradesExecuted++
               } catch (e: any) { errors.push(`${o.symbol}: ${e.message}`) }
@@ -215,7 +215,7 @@ export async function POST(req: Request) {
             const tradeAction = best.action as "buy" | "sell"
             signals.push({ symbol: sym, strategy: best.strategy, action: tradeAction, confidence: best.confidence.toFixed(2), reason: best.reason })
 
-            insertTradeSignal({
+            await insertTradeSignal({
               strategy_id: best.strategy,
               symbol: sym,
               action: tradeAction,
@@ -235,7 +235,7 @@ export async function POST(req: Request) {
                   take_profit_price: best.tpPrice,
                   stop_loss_price: best.slPrice,
                 })
-                insertTrade({ symbol: sym, side: tradeAction, qty: best.suggestedQty, order_id: result.id, status: result.status, strategy_id: best.strategy, signal_reason: best.reason, confidence: best.confidence })
+                await insertTrade({ symbol: sym, side: tradeAction, qty: best.suggestedQty, order_id: result.id, status: result.status, strategy_id: best.strategy, signal_reason: best.reason, confidence: best.confidence })
                 executedOrders.push({ symbol: sym, side: tradeAction, qty: best.suggestedQty, strategy: best.strategy, tp: best.tpPrice.toFixed(2), sl: best.slPrice.toFixed(2), orderId: result.id })
                 totalTradesExecuted++
                 log.push(`📈 Bracket ${tradeAction.toUpperCase()} ${sym} x${best.suggestedQty} | TP: $${best.tpPrice.toFixed(2)} SL: $${best.slPrice.toFixed(2)}`)
@@ -252,7 +252,7 @@ export async function POST(req: Request) {
 
     // 8. Save portfolio snapshot
     try {
-      insertPortfolioSnapshot({
+      await insertPortfolioSnapshot({
         equity, cash: Number(account.cash), buying_power: buyingPower,
         portfolio_value: Number(account.portfolio_value),
         profit_loss: equity - lastEquity,
