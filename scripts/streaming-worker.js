@@ -38,6 +38,8 @@ const DRY_RUN    = process.env.WORKER_DRY_RUN !== "false"
 // Paper = iex, Live = sip
 const STOCK_WS   = "wss://stream.data.alpaca.markets/v2/iex"
 const CRYPTO_WS  = "wss://stream.data.alpaca.markets/v1beta3/crypto/us"
+const TG_TOKEN   = "8529025762:AAFbTWjJbCUEFhiQjZquuSCPzr-hiuDzhhY"
+let   tgChatIds  = [] // Dynamically found
 
 // Symbols to stream
 const STOCK_SYMBOLS  = ["SPY","QQQ","AAPL","MSFT","TSLA","NVDA","AMD","GOOGL","META","AMZN","GLD","SLV","KO","PEP"]
@@ -124,6 +126,38 @@ function apiPost(apiPath, body) {
     req.write(data)
     req.end()
   })
+}
+
+async function broadcastTelegram(message) {
+  if (!TG_TOKEN) return
+  
+  // 1. Refresh chat IDs if empty
+  if (tgChatIds.length === 0) {
+    try {
+      const res = await new Promise((resolve) => {
+        https.get(`https://api.telegram.org/bot${TG_TOKEN}/getUpdates`, (r) => {
+          let b = ""; r.on("data", d => b += d); r.on("end", () => resolve(JSON.parse(b)))
+        })
+      })
+      if (res.ok && res.result) {
+        tgChatIds = [...new Set(res.result.map(u => u.message?.chat?.id || u.my_chat_member?.chat?.id).filter(id => id))]
+      }
+    } catch {}
+  }
+
+  // 2. Broadcast to all found IDs
+  for (const chatId of tgChatIds) {
+    try {
+      const data = JSON.stringify({ chat_id: chatId, text: message, parse_mode: "Markdown" })
+      const req = https.request({
+        hostname: "api.telegram.org",
+        path: `/bot${TG_TOKEN}/sendMessage`,
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Content-Length": Buffer.byteLength(data) }
+      })
+      req.write(data); req.end()
+    } catch {}
+  }
 }
 
 // ─── Technical Analysis (embedded — no dependency on Next.js server) ──────────
@@ -259,7 +293,9 @@ function analyzeSymbol(symbol, bars) {
 
 async function executeTrade(signal) {
   if (DRY_RUN) {
+    const msg = `🔍 *[DRY]* ${signal.action === "buy" ? "🟢 BUY" : "🔴 SELL"} *${signal.symbol}* x${signal.qty}\nPrice: $${signal.price.toFixed(2)}\nStrategy: ${best.strategy}\nReason: ${signal.reason}`
     log("TRADE", `${C.yellow}[DRY]${C.reset} ${signal.action.toUpperCase()} ${signal.symbol} x${signal.qty} | TP: $${signal.tpPrice.toFixed(2)} SL: $${signal.slPrice.toFixed(2)} | ${signal.reason}`)
+    broadcastTelegram(msg)
     totalTrades++
     return
   }
@@ -278,7 +314,9 @@ async function executeTrade(signal) {
     const result = await alpacaFetch("/orders", "POST", order)
 
     if (result.id) {
+      const msg = `🚀 *[LIVE]* ${signal.action === "buy" ? "🟢 BUY" : "🔴 SELL"} *${signal.symbol}* x${signal.qty}\nPrice: $${signal.price.toFixed(2)}\nTP: $${signal.tpPrice.toFixed(2)} | SL: $${signal.slPrice.toFixed(2)}\nOrder: ${result.id.slice(0,8)}`
       log("TRADE", `${C.green}[LIVE]${C.reset} ${signal.action.toUpperCase()} ${signal.symbol} x${signal.qty} | Order ${result.id.slice(0,8)} | TP: $${signal.tpPrice.toFixed(2)} SL: $${signal.slPrice.toFixed(2)}`)
+      broadcastTelegram(msg)
       totalTrades++
 
       // Record in DB via API
