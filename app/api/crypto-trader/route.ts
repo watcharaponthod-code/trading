@@ -36,7 +36,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    runMigrations()
+    await runMigrations()
     const body = await req.json().catch(() => ({}))
     const dryRun: boolean = body.dryRun !== false
     const config: RiskConfig = { ...DEFAULT_RISK_CONFIG, maxPositionPct: 0.02, riskPerTrade: 0.005 }
@@ -134,7 +134,7 @@ export async function POST(req: Request) {
           reason: best.reason,
         })
 
-        insertTradeSignal({
+        await insertTradeSignal({
           strategy_id: `crypto_${best.strategy}`,
           symbol: sym,
           action: tradeAction,
@@ -155,7 +155,7 @@ export async function POST(req: Request) {
               take_profit_price: parseFloat(best.tpPrice.toFixed(8)),
               stop_loss_price: parseFloat(best.slPrice.toFixed(8)),
             })
-            insertTrade({
+            await insertTrade({
               symbol: sym,
               side: tradeAction,
               qty: notional,
@@ -178,13 +178,14 @@ export async function POST(req: Request) {
 
     // Save portfolio snapshot
     try {
-      insertPortfolioSnapshot({
+      await insertPortfolioSnapshot({
         equity, cash: Number(account.cash), buying_power: buyingPower,
         portfolio_value: Number(account.portfolio_value),
         profit_loss: equity - lastEquity,
         profit_loss_pct: lastEquity > 0 ? ((equity - lastEquity) / lastEquity) * 100 : 0,
       })
     } catch {}
+ Drum:
 
     return NextResponse.json({
       status: dryRun ? "dry_run" : "executed",

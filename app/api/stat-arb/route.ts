@@ -13,7 +13,7 @@ import { insertTrade, insertTradeSignal, insertPortfolioSnapshot, runMigrations 
 // GET — fetch current stat-arb analysis for all pairs (no orders)
 export async function GET() {
   try {
-    runMigrations()
+    await runMigrations()
     const config = DEFAULT_STAT_ARB_CONFIG
 
     // Fetch positions for context
@@ -93,7 +93,7 @@ export async function GET() {
 // POST — run stat-arb engine and optionally execute trades
 export async function POST(req: NextRequest) {
   try {
-    runMigrations()
+    await runMigrations()
     const body = await req.json()
     const config: StatArbConfig = { ...DEFAULT_STAT_ARB_CONFIG, ...body.config }
     const dryRun: boolean = body.dryRun !== false // default to dry run for safety
@@ -172,7 +172,7 @@ export async function POST(req: NextRequest) {
 
         // Log to DB if actionable
         if (effectiveSignal !== "hold") {
-          insertTradeSignal({
+          await insertTradeSignal({
             strategy_id: "stat_arb",
             symbol: `${symA}/${symB}`,
             action: effectiveSignal === "long_A_short_B" ? "buy"
@@ -208,7 +208,7 @@ export async function POST(req: NextRequest) {
                 time_in_force: "day",
               })
 
-              const dbTrade = insertTrade({
+              const dbTrade = await insertTrade({
                 symbol: o.symbol,
                 side: o.side,
                 qty: o.qty,
@@ -243,7 +243,7 @@ export async function POST(req: NextRequest) {
     if (!dryRun && allOrders.length > 0) {
       try {
         const account = await getAccount()
-        insertPortfolioSnapshot({
+        await insertPortfolioSnapshot({
           equity: Number(account.equity),
           cash: Number(account.cash),
           buying_power: Number(account.buying_power),

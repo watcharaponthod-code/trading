@@ -14,8 +14,8 @@ import {
 // GET – return all strategies from DB
 export async function GET() {
   try {
-    runMigrations()
-    const configs = getStrategyConfigs()
+    await runMigrations()
+    const configs = await getStrategyConfigs()
     return NextResponse.json({ strategies: configs })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Unknown error"
@@ -35,10 +35,10 @@ export async function PATCH(req: NextRequest) {
     }
 
     if (is_active !== undefined) {
-      setStrategyActive(strategyId, is_active)
+      await setStrategyActive(strategyId, is_active)
     }
 
-    const updated = updateStrategyConfig(strategyId, { params, auto_execute, symbols })
+    const updated = await updateStrategyConfig(strategyId, { params, auto_execute, symbols })
     return NextResponse.json({ strategy: updated })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Unknown error"
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
     // Load strategy from DB if not provided inline
     let strategy: StrategyConfig | undefined = customConfig
     if (!strategy) {
-      const configs = getStrategyConfigs()
+      const configs = await getStrategyConfigs()
       const found = configs.find((c) => c.strategy_id === strategyId)
       if (!found) {
         return NextResponse.json({ error: "Strategy not found" }, { status: 400 })
@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
     // Persist all signals to DB
     for (const signal of signals) {
       const lastBar = (barsBySymbol[signal.symbol] || []).slice(-1)[0]
-      insertTradeSignal({
+      await insertTradeSignal({
         strategy_id: strategy.id,
         symbol: signal.symbol,
         action: signal.action,
@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
           })
           executedOrders.push(order)
 
-          const dbTrade = insertTrade({
+          const dbTrade = await insertTrade({
             symbol: signal.symbol,
             side: signal.action,
             qty: signal.qty,
@@ -149,7 +149,7 @@ export async function POST(req: NextRequest) {
       // Save portfolio snapshot after live execution
       try {
         const account = await fetchAccount()
-        insertPortfolioSnapshot({
+        await insertPortfolioSnapshot({
           equity: Number(account.equity),
           cash: Number(account.cash),
           buying_power: Number(account.buying_power),
