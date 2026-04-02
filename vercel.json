@@ -1,0 +1,23 @@
+{
+  "crons": [
+    {
+      "path": "/api/auto-trader",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/crypto-trader",
+      "schedule": "*/2 * * * *"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ]
+}
