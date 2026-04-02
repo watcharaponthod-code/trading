@@ -14,8 +14,8 @@ const ADMIN_CHAT_IDS = process.env.TELEGRAM_ADMIN_CHAT_IDS?.split(",") || []
 
 async function setupTelegramBot() {
   if (!BOT_TOKEN) {
-    console.error("❌ TELEGRAM_BOT_TOKEN not set in .env.local")
-    process.exit(1)
+    console.warn("⚠️  TELEGRAM_BOT_TOKEN not set - skipping telegram setup")
+    return
   }
 
   // Initialize bot
@@ -39,11 +39,11 @@ async function setupTelegramBot() {
       console.log(`   ID: ${botInfo.id}`)
     } else {
       console.error("❌ Failed to get bot info:", data.description)
-      process.exit(1)
+      return
     }
   } catch (error) {
     console.error("❌ Error fetching bot info:", error)
-    process.exit(1)
+    return
   }
 
   // Set webhook if URL provided

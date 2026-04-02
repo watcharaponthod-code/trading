@@ -14,13 +14,13 @@ const VERSION = process.env.npm_package_version || "unknown"
 
 async function sendDeployNotification() {
   if (!BOT_TOKEN) {
-    console.error("❌ TELEGRAM_BOT_TOKEN not set")
-    process.exit(1)
+    console.warn("⚠️  TELEGRAM_BOT_TOKEN not set - skipping deploy notification")
+    return
   }
 
   if (ADMIN_CHAT_IDS.length === 0) {
-    console.error("❌ TELEGRAM_ADMIN_CHAT_IDS not set")
-    process.exit(1)
+    console.warn("⚠️  TELEGRAM_ADMIN_CHAT_IDS not set - skipping deploy notification")
+    return
   }
 
   const emoji = {

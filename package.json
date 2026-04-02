@@ -11,8 +11,8 @@
     "worker:live": "set WORKER_DRY_RUN=false&& node scripts/auto-trader-worker.js",
     "stream:dry": "set WORKER_DRY_RUN=true&& node scripts/streaming-worker.js",
     "stream:live": "set WORKER_DRY_RUN=false&& node scripts/streaming-worker.js",
-    "telegram:setup": "ts-node scripts/setup-telegram.ts",
-    "telegram:notify": "ts-node scripts/notify-deploy.ts"
+    "telegram:setup": "./node_modules/.bin/ts-node scripts/setup-telegram.ts",
+    "telegram:notify": "./node_modules/.bin/ts-node scripts/notify-deploy.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -68,7 +68,8 @@
     "vaul": "^1.1.2",
     "ws": "^8.20.0",
     "pg": "^8.13.1",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.0",
