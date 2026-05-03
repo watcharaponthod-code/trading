@@ -1,7 +1,7 @@
 {
   "crons": [
     {
-      "path": "/api/cron/trade",
+      "path": "/api/cron/ai-trade",
       "schedule": "35 13 * * 1-5"
     },
     {
