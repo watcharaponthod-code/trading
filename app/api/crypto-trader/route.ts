@@ -121,6 +121,8 @@ export async function POST(req: Request) {
           .sort((a, b) => b!.confidence - a!.confidence)[0]
 
         if (!best || best.confidence < 0.55 || best.action === "hold") continue
+        // Only enter long (buy) on new positions — can't short crypto without margin
+        if (best.action === "sell") continue
 
         const tradeAction = best.action as "buy" | "sell"
         const notional = CRYPTO_NOTIONAL[sym] || 10
