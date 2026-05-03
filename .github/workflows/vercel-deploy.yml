@@ -3,10 +3,11 @@ name: Vercel Deploy CI
 on:
   push:
     branches:
-      - main # หรือ master หากสาขาหลักของคุณชื่อ master
+      - main
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   deploy-to-vercel:
