@@ -93,8 +93,13 @@ export async function getHistoricalBars(
   const isCrypto = symbol.includes("/")
   let url: string
   if (isCrypto) {
+    // Compute start far enough back so we always get `limit` bars regardless of UTC day boundary
+    const minutesMap: Record<string, number> = { "1Min": 1, "5Min": 5, "15Min": 15, "30Min": 30, "1Hour": 60, "1Day": 1440 }
+    const mins = minutesMap[timeframe] || 15
+    const startMs = Date.now() - (limit + 10) * mins * 60 * 1000
+    const start = new Date(startMs).toISOString()
     const encoded = encodeURIComponent(symbol)
-    url = `${CRYPTO_DATA_URL}/bars?symbols=${encoded}&timeframe=${timeframe}&limit=${limit}&end=${end}`
+    url = `${CRYPTO_DATA_URL}/bars?symbols=${encoded}&timeframe=${timeframe}&limit=${limit}&start=${start}&end=${end}`
   } else {
     url = `${DATA_URL}/stocks/${symbol}/bars?timeframe=${timeframe}&limit=${limit}&feed=iex&end=${end}`
   }
