@@ -53,7 +53,7 @@ async function askThaiLLM(prompt: string): Promise<any> {
         },
         { role: "user", content: prompt },
       ],
-      max_tokens: 256,
+      max_tokens: 2048,
       temperature: 0.1,
     }),
   })
