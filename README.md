@@ -16,8 +16,6 @@
 ---
 
 ## Dashboard Preview
-
-![AlgoTrade Dashboard](public/dashboard.png)
 <img src="public/dashboard.png" alt="AlgoTrade Dashboard" width="600">
 
 
