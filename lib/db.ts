@@ -122,6 +122,24 @@ export async function runMigrations() {
         CREATE INDEX IF NOT EXISTS idx_portfolio_created_at ON portfolio_snapshots(created_at DESC);
         CREATE INDEX IF NOT EXISTS idx_signals_created_at ON trade_signals(created_at DESC);
       `)
+      // Normalize symbols/params columns to TEXT in case they were previously created as TEXT[] or JSONB
+      await client.query(`
+        DO $$
+        DECLARE col_type TEXT;
+        BEGIN
+          SELECT data_type INTO col_type FROM information_schema.columns
+            WHERE table_name='strategy_configs' AND column_name='symbols';
+          IF col_type = 'ARRAY' THEN
+            EXECUTE 'ALTER TABLE strategy_configs ALTER COLUMN symbols TYPE TEXT USING to_json(symbols)::text';
+          END IF;
+          SELECT data_type INTO col_type FROM information_schema.columns
+            WHERE table_name='strategy_configs' AND column_name='params';
+          IF col_type = 'ARRAY' THEN
+            EXECUTE 'ALTER TABLE strategy_configs ALTER COLUMN params TYPE TEXT USING to_json(params)::text';
+          END IF;
+        EXCEPTION WHEN OTHERS THEN NULL;
+        END $$;
+      `)
       for (const [sid, name, desc, params, syms] of [
         ["stat_arb", "Statistical Arbitrage", "Z-score spread trading", '{"period":20,"zThreshold":2.0,"qty":1}', '["SPY","QQQ"]'],
         ["mean_reversion", "Mean Reversion", "Bollinger Bands + RSI", '{"period":20,"bbMultiplier":2.0,"rsiOversold":35,"rsiOverbought":65,"qty":1}', '["AAPL","MSFT"]'],
