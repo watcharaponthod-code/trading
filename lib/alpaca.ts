@@ -89,12 +89,22 @@ export async function getHistoricalBars(
   limit = 100
 ) {
   const end = new Date().toISOString()
-  const res = await fetch(
-    `${DATA_URL}/stocks/${symbol}/bars?timeframe=${timeframe}&limit=${limit}&feed=iex&end=${end}`,
-    { headers, cache: "no-store" }
-  )
+  const isCrypto = symbol.includes("/")
+  let url: string
+  if (isCrypto) {
+    const encoded = encodeURIComponent(symbol)
+    url = `${DATA_URL}/crypto/bars?symbols=${encoded}&timeframe=${timeframe}&limit=${limit}&end=${end}`
+  } else {
+    url = `${DATA_URL}/stocks/${symbol}/bars?timeframe=${timeframe}&limit=${limit}&feed=iex&end=${end}`
+  }
+  const res = await fetch(url, { headers, cache: "no-store" })
   if (!res.ok) throw new Error(`Historical bars fetch failed: ${res.statusText}`)
-  return res.json()
+  const json = await res.json()
+  // Crypto endpoint returns { bars: { "BTC/USD": [...] } } — normalize to { bars: [...] }
+  if (isCrypto && json.bars && !Array.isArray(json.bars)) {
+    return { bars: json.bars[symbol] || [] }
+  }
+  return json
 }
 
 export async function getLatestQuotes(symbols: string[]) {
