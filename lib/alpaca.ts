@@ -101,7 +101,13 @@ export async function getHistoricalBars(
     const encoded = encodeURIComponent(symbol)
     url = `${CRYPTO_DATA_URL}/bars?symbols=${encoded}&timeframe=${timeframe}&limit=${limit}&start=${start}&end=${end}`
   } else {
-    url = `${DATA_URL}/stocks/${symbol}/bars?timeframe=${timeframe}&limit=${limit}&feed=iex&end=${end}`
+    // Calculate start far enough back to guarantee `limit` bars (stocks skip weekends/holidays)
+    const minutesMapStock: Record<string, number> = { "1Min": 1, "5Min": 5, "15Min": 15, "30Min": 30, "1Hour": 60, "1Day": 1440 }
+    const minsStock = minutesMapStock[timeframe] || 1
+    // Multiply by 2.5 to account for weekends/holidays (only ~5 of 7 days are trading days)
+    const startMsStock = Date.now() - Math.ceil(limit * minsStock * 60 * 1000 * 2.5)
+    const startStock = new Date(startMsStock).toISOString()
+    url = `${DATA_URL}/stocks/${symbol}/bars?timeframe=${timeframe}&limit=${limit}&feed=iex&start=${startStock}&end=${end}`
   }
   const res = await fetch(url, { headers, cache: "no-store" })
   if (!res.ok) throw new Error(`Historical bars fetch failed: ${res.statusText}`)
