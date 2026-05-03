@@ -1,379 +1,379 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 780" width="1400" height="780" font-family="'Segoe UI',Arial,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" width="1400" height="760"
+     font-family="'Segoe UI',Arial,sans-serif">
+<defs>
+  <marker id="arr-gold"  markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#d97706"/></marker>
+  <marker id="arr-green" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#16a34a"/></marker>
+  <marker id="arr-orange"markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#ea580c"/></marker>
+  <marker id="arr-tg"    markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#0088cc"/></marker>
+  <marker id="arr-sky"   markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#0284c7"/></marker>
+  <marker id="arr-sky-l" markerWidth="9" markerHeight="9" refX="2" refY="3.5" orient="auto"><path d="M9,0 L9,7 L0,3.5z" fill="#0284c7"/></marker>
+  <marker id="arr-gn2"   markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#22c55e"/></marker>
+  <marker id="arr-gn-l"  markerWidth="9" markerHeight="9" refX="2" refY="3.5" orient="auto"><path d="M9,0 L9,7 L0,3.5z" fill="#22c55e"/></marker>
+  <marker id="arr-or-l"  markerWidth="9" markerHeight="9" refX="2" refY="3.5" orient="auto"><path d="M9,0 L9,7 L0,3.5z" fill="#ea580c"/></marker>
+  <marker id="arr-gy"    markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#6b7280"/></marker>
+  <marker id="arr-gy-up" markerWidth="9" markerHeight="9" refX="3.5" refY="7" orient="auto"><path d="M0,9 L7,9 L3.5,0z" fill="#6b7280"/></marker>
+  <marker id="arr-gy-dn" markerWidth="9" markerHeight="9" refX="3.5" refY="2" orient="auto"><path d="M0,0 L7,0 L3.5,9z" fill="#22c55e"/></marker>
+  <marker id="arr-vr"    markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L0,7 L9,3.5z" fill="#f59e0b"/></marker>
+</defs>
 
-  <!-- BACKGROUND -->
-  <rect width="1400" height="780" fill="#ffffff"/>
-  <rect x="0"    y="0" width="290"  height="780" fill="#f5f3ff" opacity="0.5"/>
-  <rect x="290"  y="0" width="190"  height="780" fill="#f0fdf4" opacity="0.5"/>
-  <rect x="480"  y="0" width="540"  height="780" fill="#fffbeb" opacity="0.5"/>
-  <rect x="1020" y="0" width="210"  height="780" fill="#fdf4ff" opacity="0.5"/>
-  <rect x="1230" y="0" width="170"  height="780" fill="#f0f9ff" opacity="0.5"/>
-  <line x1="290"  y1="0" x2="290"  y2="780" stroke="#e5e7eb" stroke-width="1"/>
-  <line x1="480"  y1="0" x2="480"  y2="780" stroke="#e5e7eb" stroke-width="1"/>
-  <line x1="1020" y1="0" x2="1020" y2="780" stroke="#e5e7eb" stroke-width="1"/>
-  <line x1="1230" y1="0" x2="1230" y2="780" stroke="#e5e7eb" stroke-width="1"/>
+<!-- ═══ BACKGROUND SECTIONS ═══ -->
+<rect width="1400" height="760" fill="#ffffff"/>
+<rect x="0"    y="0" width="290"  height="760" fill="#f5f3ff" opacity="0.55"/>
+<rect x="290"  y="0" width="196"  height="760" fill="#f0fdf4" opacity="0.55"/>
+<rect x="486"  y="0" width="536"  height="760" fill="#fffbeb" opacity="0.55"/>
+<rect x="1022" y="0" width="214"  height="760" fill="#fdf4ff" opacity="0.55"/>
+<rect x="1236" y="0" width="164"  height="760" fill="#f0f9ff" opacity="0.55"/>
+<line x1="290"  y1="0" x2="290"  y2="760" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="486"  y1="0" x2="486"  y2="760" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="1022" y1="0" x2="1022" y2="760" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="1236" y1="0" x2="1236" y2="760" stroke="#e5e7eb" stroke-width="1"/>
 
-  <!-- TITLE -->
-  <text x="700" y="32" text-anchor="middle" font-size="20" font-weight="700" fill="#111827">AlgoTrade — System Architecture &amp; Deployment Flow</text>
+<!-- ═══ TITLE ═══ -->
+<text x="700" y="30" text-anchor="middle" font-size="19" font-weight="700" fill="#111827">AlgoTrade — System Architecture &amp; Deployment Flow</text>
 
-  <!-- SECTION ARROW LABELS -->
-  <polygon points="18,44 262,44 276,58 262,72 18,72 32,58" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
-  <text x="147" y="63" text-anchor="middle" font-size="12" font-weight="700" fill="#5b21b6">Development</text>
-  <polygon points="286,44 452,44 466,58 452,72 286,72 300,58" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
-  <text x="376" y="63" text-anchor="middle" font-size="12" font-weight="700" fill="#15803d">CI/CD Pipeline</text>
-  <polygon points="472,44 830,44 844,58 830,72 472,72 486,58" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
-  <text x="658" y="63" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">Production — Vercel Cloud</text>
-  <polygon points="850,44 1010,44 1024,58 1010,72 850,72 864,58" fill="#fae8ff" stroke="#c026d3" stroke-width="1.5"/>
-  <text x="937" y="63" text-anchor="middle" font-size="12" font-weight="700" fill="#86198f">Services</text>
-  <polygon points="1030,44 1386,44 1400,58 1386,72 1030,72 1044,58" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
-  <text x="1215" y="63" text-anchor="middle" font-size="12" font-weight="700" fill="#0369a1">Consumers</text>
+<!-- ═══ SECTION LABELS ═══ -->
+<polygon points="14,42 278,42 292,56 278,70 14,70 28,56"   fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+<text x="153" y="61" text-anchor="middle" font-size="11" font-weight="700" fill="#5b21b6">Development</text>
+<polygon points="294,42 468,42 482,56 468,70 294,70 308,56" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+<text x="388" y="61" text-anchor="middle" font-size="11" font-weight="700" fill="#15803d">CI/CD Pipeline</text>
+<polygon points="488,42 844,42 858,56 844,70 488,70 502,56" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="673" y="61" text-anchor="middle" font-size="11" font-weight="700" fill="#d97706">Production — Vercel Cloud</text>
+<polygon points="860,42 1014,42 1028,56 1014,70 860,70 874,56" fill="#fae8ff" stroke="#c026d3" stroke-width="1.5"/>
+<text x="944" y="61" text-anchor="middle" font-size="11" font-weight="700" fill="#86198f">Services</text>
+<polygon points="1030,42 1392,42 1392,70 1030,70 1044,56" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="1211" y="61" text-anchor="middle" font-size="11" font-weight="700" fill="#0369a1">Consumers</text>
 
-  <!-- ═══ DEV CIRCULAR LOOP ═══ -->
-  <circle cx="145" cy="215" r="105" fill="none" stroke="#d1d5db" stroke-width="1"/>
-  <path d="M145,115 A100,100 0 0,1 238,168" fill="none" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
-  <polygon points="234,160 242,174 228,172" fill="#8b5cf6"/>
-  <path d="M238,168 A100,100 0 0,1 200,308" fill="none" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
-  <polygon points="196,302 206,314 194,316" fill="#8b5cf6"/>
-  <path d="M200,308 A100,100 0 0,1 52,168" fill="none" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
-  <polygon points="56,174 44,172 52,160" fill="#8b5cf6"/>
-  <path d="M52,168 A100,100 0 0,1 145,115" fill="none" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
-  <polygon points="139,109 149,109 145,119" fill="#8b5cf6"/>
-  <circle cx="145" cy="215" r="56" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="2"/>
-  <rect x="118" y="196" width="54" height="38" rx="5" fill="#7c3aed"/>
-  <rect x="123" y="201" width="44" height="28" rx="3" fill="#ddd6fe"/>
-  <line x1="127" y1="208" x2="163" y2="208" stroke="#7c3aed" stroke-width="2.5"/>
-  <line x1="127" y1="213" x2="155" y2="213" stroke="#7c3aed" stroke-width="2.5"/>
-  <line x1="127" y1="218" x2="159" y2="218" stroke="#7c3aed" stroke-width="2.5"/>
-  <text x="145" y="248" text-anchor="middle" font-size="10" font-weight="700" fill="#5b21b6">Strategy</text>
-  <text x="145" y="260" text-anchor="middle" font-size="10" font-weight="700" fill="#5b21b6">Dev</text>
-  <text x="145" y="100" text-anchor="middle" font-size="10" fill="#374151">Code Strategy</text>
-  <text x="256" y="198" text-anchor="start" font-size="10" fill="#374151">Backtest</text>
-  <text x="256" y="211" text-anchor="start" font-size="10" fill="#374151">/ Test</text>
-  <text x="80" y="338" text-anchor="middle" font-size="10" fill="#374151">Review</text>
-  <text x="22" y="198" text-anchor="start" font-size="10" fill="#374151">Tune</text>
-  <text x="22" y="211" text-anchor="start" font-size="10" fill="#374151">Params</text>
-  <text x="22" y="375" font-size="11" fill="#374151">&#9670; Code Trading Strategies</text>
-  <text x="22" y="393" font-size="11" fill="#374151">&#9670; Backtest on Historical Data</text>
-  <text x="22" y="411" font-size="11" fill="#374151">&#9670; Risk Parameter Tuning</text>
-  <text x="22" y="429" font-size="11" fill="#374151">&#9670; Paper Trade Validation</text>
-  <text x="22" y="447" font-size="11" fill="#374151">&#9670; Code Review &amp; Testing</text>
-  <text x="22" y="465" font-size="11" fill="#374151">&#9670; git commit &amp; push to main</text>
+<!-- ═══ DEVELOPMENT CIRCULAR LOOP ═══ -->
+<circle cx="145" cy="206" r="98" fill="none" stroke="#d1d5db" stroke-width="1"/>
+<!-- Circular arrows -->
+<path d="M145,112 A94,94 0 0,1 232,159" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr-gy)"/>
+<path d="M232,159 A94,94 0 0,1 196,296" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr-gy)"/>
+<path d="M196,296 A94,94 0 0,1 50,175" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr-gy)"/>
+<path d="M50,175 A94,94 0 0,1 145,112"  fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr-gy)"/>
+<!-- Center icon: code laptop -->
+<circle cx="145" cy="206" r="52" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="2"/>
+<rect x="118" y="188" width="54" height="38" rx="5" fill="#7c3aed"/>
+<rect x="123" y="193" width="44" height="28" rx="3" fill="#ddd6fe"/>
+<line x1="128" y1="200" x2="162" y2="200" stroke="#7c3aed" stroke-width="2.5"/>
+<line x1="128" y1="207" x2="154" y2="207" stroke="#6d28d9" stroke-width="2"/>
+<line x1="128" y1="214" x2="158" y2="214" stroke="#7c3aed" stroke-width="2.5"/>
+<text x="145" y="238" text-anchor="middle" font-size="10" font-weight="700" fill="#5b21b6">Strategy Dev</text>
+<!-- Loop labels -->
+<text x="145" y="98"  text-anchor="middle" font-size="9.5" fill="#374151">Code Strategy</text>
+<text x="250" y="190" text-anchor="start"  font-size="9.5" fill="#374151">Backtest/Test</text>
+<text x="90"  y="326" text-anchor="middle" font-size="9.5" fill="#374151">Review/Tune</text>
+<text x="16"  y="190" text-anchor="start"  font-size="9.5" fill="#374151">Risk Tuning</text>
+<!-- Activities list -->
+<text x="18" y="362" font-size="10.5" fill="#374151">&#9670; Code Trading Strategies</text>
+<text x="18" y="379" font-size="10.5" fill="#374151">&#9670; Backtest on Historical Data</text>
+<text x="18" y="396" font-size="10.5" fill="#374151">&#9670; Risk Parameter Tuning</text>
+<text x="18" y="413" font-size="10.5" fill="#374151">&#9670; Paper Trade Validation</text>
+<text x="18" y="430" font-size="10.5" fill="#374151">&#9670; Code Review &amp; Testing</text>
+<text x="18" y="447" font-size="10.5" fill="#374151">&#9670; git commit &amp; push to main</text>
 
-  <!-- ═══ GITHUB BOX ═══ -->
-  <rect x="302" y="86" width="156" height="110" rx="12" fill="white" stroke="#374151" stroke-width="2"/>
-  <circle cx="380" cy="120" r="28" fill="#24292e"/>
-  <polygon points="361,101 354,89 365,97" fill="#24292e"/>
-  <polygon points="399,101 406,89 395,97" fill="#24292e"/>
-  <circle cx="371" cy="117" r="4.5" fill="white"/>
-  <circle cx="389" cy="117" r="4.5" fill="white"/>
-  <path d="M373,128 Q380,134 387,128" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <path d="M361,122 Q352,132 358,142" stroke="white" stroke-width="1.5" fill="none"/>
-  <path d="M399,122 Q408,132 402,142" stroke="white" stroke-width="1.5" fill="none"/>
-  <text x="380" y="181" text-anchor="middle" font-size="12" font-weight="700" fill="#111827">GitHub</text>
-  <text x="380" y="196" text-anchor="middle" font-size="9" fill="#6b7280">watcharaponthod-code/trading</text>
-  <line x1="250" y1="215" x2="300" y2="140" stroke="#8b5cf6" stroke-width="2"/>
-  <polygon points="293,143 304,136 305,148" fill="#8b5cf6"/>
-  <text x="262" y="186" font-size="9" fill="#6b7280" font-style="italic">git push</text>
+<!-- ═══ GITHUB BOX ═══ -->
+<rect x="307" y="78" width="156" height="110" rx="12" fill="white" stroke="#374151" stroke-width="2"/>
+<!-- GitHub Octocat icon: dark circle + cat ears + face -->
+<circle cx="385" cy="116" r="26" fill="#24292e"/>
+<!-- Ears -->
+<polygon points="368,99 361,86 372,95" fill="#24292e"/>
+<polygon points="402,99 409,86 398,95" fill="#24292e"/>
+<!-- White face area -->
+<ellipse cx="385" cy="114" rx="17" ry="15" fill="#f0ece4"/>
+<!-- Eyes -->
+<circle cx="377" cy="111" r="3.2" fill="#24292e"/>
+<circle cx="393" cy="111" r="3.2" fill="#24292e"/>
+<!-- Nose & smile -->
+<circle cx="385" cy="118" r="2"   fill="#24292e"/>
+<path d="M379,123 Q385,127 391,123" stroke="#24292e" stroke-width="1.5" fill="none"/>
+<!-- Tentacles -->
+<path d="M368,124 Q358,132 362,142" fill="none" stroke="#f0ece4" stroke-width="1.8"/>
+<path d="M402,124 Q412,132 408,142" fill="none" stroke="#f0ece4" stroke-width="1.8"/>
+<text x="385" y="174" text-anchor="middle" font-size="11.5" font-weight="700" fill="#111827">GitHub</text>
+<text x="385" y="188" text-anchor="middle" font-size="8.5"  fill="#6b7280">watcharaponthod-code/trading</text>
+<!-- git push arrow from dev loop -->
+<line x1="245" y1="206" x2="305" y2="134" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr-gy)"/>
+<text x="265" y="180" font-size="8.5" fill="#7c3aed" font-style="italic">git push</text>
 
-  <!-- ═══ CI/CD COLUMN ═══ -->
-  <text x="375" y="228" text-anchor="middle" font-size="9" fill="#6b7280" font-style="italic">changes trigger build</text>
-  <line x1="380" y1="196" x2="380" y2="250" stroke="#22c55e" stroke-width="2.5"/>
-  <polygon points="374,246 386,246 380,256" fill="#22c55e"/>
+<!-- ═══ GITHUB ACTIONS BOX ═══ -->
+<line x1="385" y1="188" x2="385" y2="238" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-gy-dn)"/>
+<text x="396" y="218" font-size="8.5" fill="#6b7280">push event</text>
+<rect x="307" y="244" width="156" height="102" rx="12" fill="white" stroke="#22c55e" stroke-width="2"/>
+<!-- GitHub Actions icon: circle play button -->
+<circle cx="358" cy="285" r="24" fill="#22c55e"/>
+<polygon points="350,273 350,297 374,285" fill="white"/>
+<!-- Workflow gear -->
+<circle cx="420" cy="276" r="13" fill="none" stroke="#22c55e" stroke-width="2.2"/>
+<circle cx="420" cy="276" r="6"  fill="#dcfce7"/>
+<line x1="420" y1="263" x2="420" y2="259" stroke="#22c55e" stroke-width="2"/>
+<line x1="420" y1="289" x2="420" y2="293" stroke="#22c55e" stroke-width="2"/>
+<line x1="407" y1="276" x2="403" y2="276" stroke="#22c55e" stroke-width="2"/>
+<line x1="433" y1="276" x2="437" y2="276" stroke="#22c55e" stroke-width="2"/>
+<line x1="411" y1="267" x2="408" y2="264" stroke="#22c55e" stroke-width="1.5"/>
+<line x1="429" y1="285" x2="432" y2="288" stroke="#22c55e" stroke-width="1.5"/>
+<text x="385" y="322" text-anchor="middle" font-size="11"   font-weight="700" fill="#14532d">GitHub Actions</text>
+<text x="385" y="337" text-anchor="middle" font-size="8.5"  fill="#6b7280">vercel-deploy.yml · on push</text>
 
-  <!-- GitHub Actions -->
-  <rect x="302" y="256" width="156" height="100" rx="12" fill="white" stroke="#22c55e" stroke-width="2"/>
-  <circle cx="348" cy="294" r="24" fill="#22c55e"/>
-  <polygon points="340,284 340,304 362,294" fill="white"/>
-  <circle cx="420" cy="286" r="14" fill="none" stroke="#22c55e" stroke-width="2"/>
-  <circle cx="420" cy="286" r="7" fill="#dcfce7"/>
-  <line x1="420" y1="272" x2="420" y2="268" stroke="#22c55e" stroke-width="2"/>
-  <line x1="420" y1="300" x2="420" y2="304" stroke="#22c55e" stroke-width="2"/>
-  <line x1="406" y1="286" x2="402" y2="286" stroke="#22c55e" stroke-width="2"/>
-  <line x1="434" y1="286" x2="438" y2="286" stroke="#22c55e" stroke-width="2"/>
-  <text x="380" y="334" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">GitHub Actions</text>
-  <text x="380" y="348" text-anchor="middle" font-size="9" fill="#6b7280">vercel-deploy.yml</text>
+<!-- ═══ VERCEL DEPLOY BOX ═══ -->
+<line x1="385" y1="346" x2="385" y2="390" stroke="#111827" stroke-width="2.5" marker-end="url(#arr-gy-dn)"/>
+<text x="396" y="372" font-size="8.5" fill="#6b7280">npm build</text>
+<rect x="307" y="396" width="156" height="98" rx="12" fill="white" stroke="#111827" stroke-width="2.5"/>
+<!-- Vercel triangle (official logo) -->
+<polygon points="385,412 354,458 416,458" fill="#000000"/>
+<text x="385" y="476" text-anchor="middle" font-size="11"  font-weight="700" fill="#111827">Vercel Deploy</text>
+<text x="385" y="490" text-anchor="middle" font-size="8.5" fill="#6b7280">Edge Network · ~30s</text>
+<!-- Deploy arrow to app box -->
+<line x1="463" y1="445" x2="494" y2="445" stroke="#f59e0b" stroke-width="3" marker-end="url(#arr-vr)"/>
+<text x="477" y="437" text-anchor="middle" font-size="8.5" fill="#d97706" font-weight="600">deploy</text>
 
-  <line x1="380" y1="356" x2="380" y2="392" stroke="#111827" stroke-width="2.5"/>
-  <polygon points="374,388 386,388 380,398" fill="#111827"/>
-  <text x="390" y="378" font-size="9" fill="#6b7280">npm build</text>
+<!-- ═══ PRODUCTION APP BOX ═══ -->
+<rect x="494" y="78"  width="522" height="546" rx="14" fill="white" stroke="#f59e0b" stroke-width="2.5"/>
+<!-- Header bar -->
+<rect x="494" y="78"  width="522" height="36"  rx="14" fill="#f59e0b"/>
+<rect x="494" y="100" width="522" height="14"  fill="#f59e0b"/>
+<!-- Next.js logo in header -->
+<circle cx="520" cy="92" r="13" fill="rgba(0,0,0,0.25)"/>
+<text x="520" y="97" text-anchor="middle" font-size="14" font-weight="900" fill="white">N</text>
+<text x="762" y="102" text-anchor="middle" font-size="12.5" font-weight="700" fill="white">Next.js 16 App — Vercel Cloud / Sandbox</text>
 
-  <!-- Vercel Deploy -->
-  <rect x="302" y="398" width="156" height="96" rx="12" fill="white" stroke="#111827" stroke-width="2"/>
-  <polygon points="380,414 350,458 410,458" fill="#111827"/>
-  <text x="380" y="478" text-anchor="middle" font-size="11" font-weight="700" fill="#111827">Vercel Deploy</text>
-  <text x="380" y="492" text-anchor="middle" font-size="9" fill="#6b7280">Edge Network · ~30s</text>
+<!-- ──── Dashboard UI (left, top) ──── -->
+<rect x="504" y="124" width="244" height="108" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<rect x="504" y="124" width="244" height="22"  rx="9" fill="#93c5fd"/>
+<rect x="504" y="136" width="244" height="10"  fill="#93c5fd"/>
+<!-- Browser chrome dots -->
+<circle cx="516" cy="135" r="4" fill="#f87171"/>
+<circle cx="528" cy="135" r="4" fill="#fbbf24"/>
+<circle cx="540" cy="135" r="4" fill="#4ade80"/>
+<rect x="551" y="130" width="188" height="10" rx="3" fill="white" opacity="0.8"/>
+<text x="645" y="138" text-anchor="middle" font-size="7" fill="#4b5563">localhost:3000</text>
+<!-- Mini portfolio chart -->
+<polyline points="513,168 527,158 541,162 555,151 568,154 581,145 595,148 609,139 623,142 637,133 651,136 664,127 678,130 692,121 706,124 720,115 734,118" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<!-- Price chips -->
+<rect x="513" y="178" width="48" height="22" rx="4" fill="white" stroke="#bfdbfe" stroke-width="1"/>
+<text x="537" y="187" text-anchor="middle" font-size="7.5" fill="#1d4ed8" font-weight="700">SPY</text>
+<text x="537" y="198" text-anchor="middle" font-size="8.5" fill="#059669">$719</text>
+<rect x="565" y="178" width="48" height="22" rx="4" fill="white" stroke="#bfdbfe" stroke-width="1"/>
+<text x="589" y="187" text-anchor="middle" font-size="7.5" fill="#1d4ed8" font-weight="700">NVDA</text>
+<text x="589" y="198" text-anchor="middle" font-size="8.5" fill="#059669">$198</text>
+<rect x="617" y="178" width="48" height="22" rx="4" fill="white" stroke="#bfdbfe" stroke-width="1"/>
+<text x="641" y="187" text-anchor="middle" font-size="7.5" fill="#1d4ed8" font-weight="700">AAPL</text>
+<text x="641" y="198" text-anchor="middle" font-size="8.5" fill="#059669">$280</text>
+<rect x="669" y="178" width="48" height="22" rx="4" fill="white" stroke="#bfdbfe" stroke-width="1"/>
+<text x="693" y="187" text-anchor="middle" font-size="7.5" fill="#1d4ed8" font-weight="700">TSLA</text>
+<text x="693" y="198" text-anchor="middle" font-size="8.5" fill="#ef4444">$248</text>
+<text x="626" y="224" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1e40af">Dashboard UI (React)</text>
 
-  <line x1="458" y1="446" x2="490" y2="446" stroke="#f59e0b" stroke-width="3"/>
-  <polygon points="486,439 498,446 486,453" fill="#f59e0b"/>
-  <text x="474" y="437" text-anchor="middle" font-size="9" fill="#d97706" font-weight="600">deploy</text>
+<!-- ──── API Routes (left, mid) ──── -->
+<rect x="504" y="244" width="244" height="100" rx="9" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<rect x="513" y="254" width="44" height="22"  rx="6" fill="#16a34a"/>
+<text x="535" y="269" text-anchor="middle" font-size="11" font-weight="700" fill="white">API</text>
+<text x="566" y="264" font-size="8.5" fill="#374151">/account  /trade  /orders</text>
+<text x="566" y="276" font-size="8.5" fill="#374151">/strategy  /auto-trader</text>
+<text x="566" y="288" font-size="8.5" fill="#374151">/market  /positions</text>
+<text x="566" y="300" font-size="8.5" fill="#374151">/db-trades  /db-signals</text>
+<text x="566" y="312" font-size="8.5" fill="#374151">/stat-arb  /telegram/webhook</text>
+<text x="626" y="336" text-anchor="middle" font-size="10.5" font-weight="700" fill="#14532d">14 API Routes</text>
 
-  <!-- ═══ PRODUCTION APP BOX ═══ -->
-  <rect x="494" y="82" width="518" height="476" rx="16" fill="white" stroke="#f59e0b" stroke-width="2.5"/>
-  <rect x="494" y="82" width="518" height="38" rx="16" fill="#f59e0b"/>
-  <rect x="494" y="102" width="518" height="18" fill="#f59e0b"/>
-  <ellipse cx="520" cy="96" rx="11" ry="7" fill="rgba(255,255,255,0.45)"/>
-  <ellipse cx="534" cy="91" rx="10" ry="7" fill="rgba(255,255,255,0.45)"/>
-  <ellipse cx="548" cy="96" rx="11" ry="7" fill="rgba(255,255,255,0.45)"/>
-  <text x="753" y="106" text-anchor="middle" font-size="13" font-weight="700" fill="white">Next.js 16 App — Vercel Cloud / Sandbox</text>
+<!-- ──── Strategy Engine + Risk Manager (left, bottom) ──── -->
+<rect x="504" y="354" width="244" height="248" rx="9" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.5"/>
+<!-- Strategy chart icon -->
+<rect x="513" y="364" width="40" height="34" rx="5" fill="#9333ea"/>
+<polyline points="518,390 524,378 530,382 536,372 542,376 548,366 554,370" stroke="white" stroke-width="2" fill="none"/>
+<text x="563" y="373" font-size="8.5" fill="#374151">Stat-Arb (Z-score / OLS)</text>
+<text x="563" y="385" font-size="8.5" fill="#374151">Mean Reversion (BB+RSI)</text>
+<text x="563" y="397" font-size="8.5" fill="#374151">EMA Momentum (MACD+VWAP)</text>
+<text x="563" y="409" font-size="8.5" fill="#374151">Pairs Trading (OLS hedge)</text>
+<line x1="513" y1="420" x2="738" y2="420" stroke="#e9d5ff" stroke-width="1"/>
+<!-- Shield icon for Risk Manager -->
+<path d="M520,432 L520,449 Q520,460 534,465 Q548,460 548,449 L548,432 Z" fill="#7c3aed"/>
+<path d="M526,446 L532,452 L543,439" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="560" y="438" font-size="8.5" fill="#374151">Kelly Criterion (Half-Kelly)</text>
+<text x="560" y="450" font-size="8.5" fill="#374151">ATR sizing · Max 5% / symbol</text>
+<text x="560" y="462" font-size="8.5" fill="#374151">Portfolio heat ≤ 20%</text>
+<text x="560" y="474" font-size="8.5" fill="#374151">Stop-Loss −1.5% / TP +2.5%</text>
+<text x="560" y="486" font-size="8.5" fill="#374151">Circuit breaker −3% daily</text>
+<text x="560" y="498" font-size="8.5" fill="#374151">Drawdown guard −8%</text>
+<text x="626" y="592" text-anchor="middle" font-size="10.5" font-weight="700" fill="#6b21a8">Strategy Engine + Risk Manager</text>
 
-  <!-- Dashboard UI sub-box -->
-  <rect x="506" y="130" width="238" height="120" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
-  <rect x="506" y="130" width="238" height="24" rx="10" fill="#93c5fd"/>
-  <rect x="506" y="144" width="238" height="10" fill="#93c5fd"/>
-  <circle cx="519" cy="142" r="4" fill="#f87171"/>
-  <circle cx="531" cy="142" r="4" fill="#fbbf24"/>
-  <circle cx="543" cy="142" r="4" fill="#4ade80"/>
-  <rect x="555" y="137" width="180" height="10" rx="4" fill="white" opacity="0.8"/>
-  <text x="645" y="145" text-anchor="middle" font-size="7" fill="#4b5563">localhost:3000</text>
-  <polyline points="515,185 528,175 541,179 554,169 567,172 580,163 593,165 606,157 619,159 632,152 645,154 658,147 671,150 684,143 697,146 710,139 723,142 736,135" stroke="#3b82f6" stroke-width="2" fill="none"/>
-  <rect x="515" y="195" width="52" height="24" rx="4" fill="white" stroke="#bfdbfe" stroke-width="1"/>
-  <text x="541" y="204" text-anchor="middle" font-size="8" fill="#1d4ed8" font-weight="700">SPY</text>
-  <text x="541" y="216" text-anchor="middle" font-size="9" fill="#059669">$719</text>
-  <rect x="571" y="195" width="52" height="24" rx="4" fill="white" stroke="#bfdbfe" stroke-width="1"/>
-  <text x="597" y="204" text-anchor="middle" font-size="8" fill="#1d4ed8" font-weight="700">NVDA</text>
-  <text x="597" y="216" text-anchor="middle" font-size="9" fill="#059669">$198</text>
-  <rect x="627" y="195" width="52" height="24" rx="4" fill="white" stroke="#bfdbfe" stroke-width="1"/>
-  <text x="653" y="204" text-anchor="middle" font-size="8" fill="#1d4ed8" font-weight="700">AAPL</text>
-  <text x="653" y="216" text-anchor="middle" font-size="9" fill="#059669">$280</text>
-  <rect x="683" y="195" width="52" height="24" rx="4" fill="white" stroke="#bfdbfe" stroke-width="1"/>
-  <text x="709" y="204" text-anchor="middle" font-size="8" fill="#1d4ed8" font-weight="700">TSLA</text>
-  <text x="709" y="216" text-anchor="middle" font-size="9" fill="#ef4444">$248</text>
-  <text x="625" y="242" text-anchor="middle" font-size="11" font-weight="700" fill="#1e40af">Dashboard UI (React)</text>
+<!-- ──── Auto-Trader (right, top) ──── -->
+<rect x="760" y="124" width="248" height="110" rx="9" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5"/>
+<!-- Robot face icon -->
+<rect x="770" y="136" width="46" height="38" rx="7" fill="#0284c7"/>
+<rect x="778" y="130" width="30" height="10" rx="4" fill="#0284c7"/>
+<circle cx="784" cy="151" r="6"  fill="white"/>
+<circle cx="802" cy="151" r="6"  fill="white"/>
+<circle cx="784" cy="151" r="2.5" fill="#0284c7"/>
+<circle cx="802" cy="151" r="2.5" fill="#0284c7"/>
+<rect x="775" y="162" width="34" height="5" rx="2" fill="white"/>
+<text x="828" y="137" font-size="8.5" fill="#374151">16 symbols scanned</text>
+<text x="828" y="149" font-size="8.5" fill="#374151">5 stat-arb pairs monitored</text>
+<text x="828" y="161" font-size="8.5" fill="#374151">60-second polling cycle</text>
+<text x="828" y="173" font-size="8.5" fill="#374151">Stale order cleanup (10m)</text>
+<text x="828" y="185" font-size="8.5" fill="#374151">Portfolio snapshot saved</text>
+<text x="884" y="226" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0369a1">Auto-Trader Engine</text>
 
-  <!-- API Routes sub-box -->
-  <rect x="506" y="262" width="238" height="108" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
-  <rect x="516" y="272" width="46" height="22" rx="6" fill="#16a34a"/>
-  <text x="539" y="287" text-anchor="middle" font-size="11" font-weight="700" fill="white">API</text>
-  <text x="571" y="282" font-size="9" fill="#374151">/account   /trade   /orders</text>
-  <text x="571" y="294" font-size="9" fill="#374151">/strategy  /auto-trader</text>
-  <text x="571" y="306" font-size="9" fill="#374151">/market   /positions</text>
-  <text x="571" y="318" font-size="9" fill="#374151">/db-trades  /db-signals</text>
-  <text x="571" y="330" font-size="9" fill="#374151">/stat-arb  /telegram/webhook</text>
-  <text x="625" y="362" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">14 API Routes</text>
+<!-- ──── DB Layer (right, mid) ──── -->
+<rect x="760" y="248" width="248" height="100" rx="9" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+<!-- DB cylinder icon -->
+<ellipse cx="798" cy="268" rx="22" ry="8"  fill="#f97316"/>
+<rect    x="776"   y="268" width="44" height="40" fill="#f97316"/>
+<ellipse cx="798" cy="268" rx="22" ry="8"  fill="#fb923c"/>
+<ellipse cx="798" cy="282" rx="22" ry="8"  fill="#fb923c" opacity="0.4"/>
+<ellipse cx="798" cy="308" rx="22" ry="8"  fill="#ea580c"/>
+<text x="832" y="268" font-size="8.5" fill="#374151">trades</text>
+<text x="832" y="280" font-size="8.5" fill="#374151">strategy_configs</text>
+<text x="832" y="292" font-size="8.5" fill="#374151">portfolio_snapshots</text>
+<text x="832" y="304" font-size="8.5" fill="#374151">trade_signals</text>
+<text x="832" y="316" font-size="8.5" fill="#374151">telegram_chats</text>
+<text x="884" y="340" text-anchor="middle" font-size="10.5" font-weight="700" fill="#c2410c">DB Layer (Firestore / PG / SQLite)</text>
 
-  <!-- Strategy + Risk sub-box -->
-  <rect x="506" y="380" width="238" height="162" rx="10" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.5"/>
-  <rect x="516" y="392" width="42" height="34" rx="5" fill="#9333ea"/>
-  <polyline points="521,418 527,408 533,412 539,402 545,406 551,396 557,400" stroke="white" stroke-width="2" fill="none"/>
-  <text x="573" y="402" font-size="9" fill="#374151">Stat-Arb (Z-score / OLS)</text>
-  <text x="573" y="414" font-size="9" fill="#374151">Mean Reversion (BB+RSI)</text>
-  <text x="573" y="426" font-size="9" fill="#374151">EMA Momentum (MACD+VWAP)</text>
-  <text x="573" y="438" font-size="9" fill="#374151">Pairs Trading (OLS hedge)</text>
-  <line x1="516" y1="448" x2="734" y2="448" stroke="#e9d5ff" stroke-width="1"/>
-  <path d="M523,460 L523,475 Q523,484 534,488 Q545,484 545,475 L545,460 Z" fill="#7c3aed"/>
-  <path d="M528,471 L533,477 L543,465" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="556" y="462" font-size="9" fill="#374151">Kelly Criterion (Half-Kelly)</text>
-  <text x="556" y="474" font-size="9" fill="#374151">ATR sizing · Max 5%/symbol</text>
-  <text x="556" y="486" font-size="9" fill="#374151">Portfolio heat ≤ 20%</text>
-  <text x="556" y="498" font-size="9" fill="#374151">Stop-Loss -1.5% / TP +2.5%</text>
-  <text x="556" y="510" font-size="9" fill="#374151">Circuit breaker -3% daily</text>
-  <text x="625" y="533" text-anchor="middle" font-size="11" font-weight="700" fill="#6b21a8">Strategy Engine + Risk Manager</text>
+<!-- ──── Telegram Worker (right, bottom) ──── -->
+<rect x="760" y="354" width="248" height="248" rx="9" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5"/>
+<!-- Telegram icon: blue circle + paper plane -->
+<circle cx="800" cy="396" r="26" fill="#2AABEE"/>
+<path d="M783,396 L818,385 L809,410 L802,401Z" fill="white"/>
+<path d="M802,401 L805,408 L809,410 L805,399Z" fill="#1a8bc2"/>
+<line x1="783" y1="396" x2="802" y2="401" stroke="#cce8f4" stroke-width="1"/>
+<text x="840" y="384" font-size="8.5" fill="#374151">Commands: /status</text>
+<text x="840" y="396" font-size="8.5" fill="#374151">/positions  /signals</text>
+<text x="840" y="408" font-size="8.5" fill="#374151">/trades  /performance</text>
+<line x1="769" y1="420" x2="998" y2="420" stroke="#e0f2fe" stroke-width="1"/>
+<text x="769" y="434" font-size="8.5" fill="#374151">Trade execution alerts</text>
+<text x="769" y="446" font-size="8.5" fill="#374151">Signal generation notifications</text>
+<text x="769" y="458" font-size="8.5" fill="#374151">Deploy notifications on startup</text>
+<text x="769" y="470" font-size="8.5" fill="#374151">Inline keyboards for actions</text>
+<text x="884" y="592" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0369a1">Telegram Bot Worker</text>
 
-  <!-- Auto-Trader sub-box (right col top) -->
-  <rect x="756" y="130" width="244" height="120" rx="10" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5"/>
-  <rect x="766" y="144" width="44" height="36" rx="6" fill="#0284c7"/>
-  <rect x="774" y="138" width="28" height="10" rx="4" fill="#0284c7"/>
-  <circle cx="779" cy="157" r="5" fill="white"/>
-  <circle cx="795" cy="157" r="5" fill="white"/>
-  <rect x="771" y="168" width="32" height="4" rx="2" fill="white"/>
-  <text x="820" y="144" font-size="9" fill="#374151">16 symbols scanned</text>
-  <text x="820" y="156" font-size="9" fill="#374151">5 stat-arb pairs monitored</text>
-  <text x="820" y="168" font-size="9" fill="#374151">60-second polling cycle</text>
-  <text x="820" y="180" font-size="9" fill="#374151">Stale order cleanup (10m)</text>
-  <text x="820" y="192" font-size="9" fill="#374151">Portfolio snapshot saved</text>
-  <text x="878" y="240" text-anchor="middle" font-size="11" font-weight="700" fill="#0369a1">Auto-Trader Engine</text>
+<!-- ═══ EXTERNAL SERVICE BOXES ═══ -->
 
-  <!-- DB Layer sub-box (right col middle) -->
-  <rect x="756" y="262" width="244" height="108" rx="10" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
-  <ellipse cx="790" cy="282" rx="20" ry="7" fill="#f97316"/>
-  <rect x="770" y="282" width="40" height="40" fill="#f97316"/>
-  <ellipse cx="790" cy="282" rx="20" ry="7" fill="#fb923c"/>
-  <ellipse cx="790" cy="294" rx="20" ry="7" fill="#fb923c" opacity="0.5"/>
-  <ellipse cx="790" cy="322" rx="20" ry="7" fill="#f97316"/>
-  <text x="822" y="284" font-size="9" fill="#374151">trades</text>
-  <text x="822" y="296" font-size="9" fill="#374151">strategy_configs</text>
-  <text x="822" y="308" font-size="9" fill="#374151">portfolio_snapshots</text>
-  <text x="822" y="320" font-size="9" fill="#374151">trade_signals</text>
-  <text x="822" y="332" font-size="9" fill="#374151">telegram_chats</text>
-  <text x="878" y="362" text-anchor="middle" font-size="11" font-weight="700" fill="#c2410c">DB Layer (Firestore/PG/SQLite)</text>
+<!-- ── Alpaca Markets (y=210–346) ── -->
+<rect x="1034" y="210" width="178" height="136" rx="12" fill="white" stroke="#fbbf24" stroke-width="2"/>
+<rect x="1034" y="210" width="178" height="36"  rx="12" fill="#fbbf24"/>
+<rect x="1034" y="230" width="178" height="16"  fill="#fbbf24"/>
+<!-- Candlestick icon in header -->
+<rect x="1046" y="218" width="8" height="18" rx="1" fill="rgba(255,255,255,0.9)"/>
+<line x1="1050" y1="213" x2="1050" y2="218" stroke="rgba(255,255,255,0.9)" stroke-width="1.8"/>
+<line x1="1050" y1="236" x2="1050" y2="241" stroke="rgba(255,255,255,0.9)" stroke-width="1.8"/>
+<rect x="1057" y="222" width="8" height="11" rx="1" fill="rgba(255,255,255,0.7)"/>
+<line x1="1061" y1="216" x2="1061" y2="222" stroke="rgba(255,255,255,0.7)" stroke-width="1.8"/>
+<line x1="1061" y1="233" x2="1061" y2="238" stroke="rgba(255,255,255,0.7)" stroke-width="1.8"/>
+<rect x="1068" y="215" width="8" height="20" rx="1" fill="rgba(255,255,255,0.9)"/>
+<line x1="1072" y1="210" x2="1072" y2="215" stroke="rgba(255,255,255,0.9)" stroke-width="1.8"/>
+<line x1="1072" y1="235" x2="1072" y2="240" stroke="rgba(255,255,255,0.9)" stroke-width="1.8"/>
+<text x="1132" y="232" text-anchor="middle" font-size="12" font-weight="700" fill="white">Alpaca Markets</text>
+<text x="1123" y="262" text-anchor="middle" font-size="8.5" fill="#374151">Paper Trading REST API</text>
+<text x="1123" y="276" text-anchor="middle" font-size="8.5" fill="#374151">Live Market Data (bars)</text>
+<text x="1123" y="290" text-anchor="middle" font-size="8.5" fill="#374151">Order Execution &amp; Fill</text>
+<text x="1123" y="304" text-anchor="middle" font-size="8.5" fill="#374151">Portfolio History</text>
+<text x="1123" y="322" text-anchor="middle" font-size="8"   fill="#9ca3af">paper-api.alpaca.markets/v2</text>
+<text x="1123" y="338" text-anchor="middle" font-size="8"   fill="#9ca3af">equity: $102,084 · 3 positions</text>
 
-  <!-- Telegram Worker sub-box (right col bottom) -->
-  <rect x="756" y="380" width="244" height="162" rx="10" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5"/>
-  <circle cx="796" cy="422" r="28" fill="#0088cc"/>
-  <path d="M778,422 L814,410 L804,438 L797,429 Z" fill="white"/>
-  <path d="M797,429 L800,435 L804,438 L800,427Z" fill="#cce8f4"/>
-  <line x1="778" y1="422" x2="800" y2="427" stroke="#cce8f4" stroke-width="1.5"/>
-  <text x="840" y="410" font-size="9" fill="#374151">Commands: /status</text>
-  <text x="840" y="422" font-size="9" fill="#374151">/positions  /signals</text>
-  <text x="840" y="434" font-size="9" fill="#374151">/trades  /performance</text>
-  <line x1="766" y1="446" x2="990" y2="446" stroke="#e0f2fe" stroke-width="1"/>
-  <text x="766" y="460" font-size="9" fill="#374151">Trade execution alerts</text>
-  <text x="766" y="472" font-size="9" fill="#374151">Signal generation notifications</text>
-  <text x="766" y="484" font-size="9" fill="#374151">Deploy notifications on startup</text>
-  <text x="766" y="496" font-size="9" fill="#374151">Inline keyboards for actions</text>
-  <text x="878" y="533" text-anchor="middle" font-size="11" font-weight="700" fill="#0369a1">Telegram Bot Worker</text>
+<!-- ── Firebase Firestore (y=366–530) ── -->
+<rect x="1034" y="366" width="178" height="164" rx="12" fill="white" stroke="#f97316" stroke-width="2"/>
+<rect x="1034" y="366" width="178" height="36"  rx="12" fill="#f97316"/>
+<rect x="1034" y="386" width="178" height="16"  fill="#f97316"/>
+<!-- Firebase flame SVG path -->
+<path d="M1074,374 Q1063,380 1060,390 Q1058,398 1065,405 Q1074,409 1074,409 Q1074,409 1065,399 Q1060,392 1064,384 Q1068,376 1074,374Z" fill="rgba(255,255,255,0.5)"/>
+<path d="M1074,370 Q1058,378 1055,392 Q1052,404 1062,412 Q1074,417 1086,412 Q1096,404 1093,392 Q1090,378 1074,370Z" fill="rgba(255,255,255,0.7)"/>
+<path d="M1074,376 Q1065,382 1063,392 Q1062,400 1070,406 Q1074,408 1078,406 Q1086,400 1085,392 Q1083,382 1074,376Z" fill="rgba(255,255,255,0.5)"/>
+<text x="1132" y="388" text-anchor="middle" font-size="12" font-weight="700" fill="white">Firebase Firestore</text>
+<!-- Collection rows -->
+<rect x="1044" y="412" width="158" height="17" rx="4" fill="#fff7ed"/>
+<text x="1123" y="424" text-anchor="middle" font-size="8.5" fill="#374151">trades</text>
+<rect x="1044" y="432" width="158" height="17" rx="4" fill="#fff7ed"/>
+<text x="1123" y="444" text-anchor="middle" font-size="8.5" fill="#374151">strategy_configs</text>
+<rect x="1044" y="452" width="158" height="17" rx="4" fill="#fff7ed"/>
+<text x="1123" y="464" text-anchor="middle" font-size="8.5" fill="#374151">portfolio_snapshots</text>
+<rect x="1044" y="472" width="158" height="17" rx="4" fill="#fff7ed"/>
+<text x="1123" y="484" text-anchor="middle" font-size="8.5" fill="#374151">trade_signals</text>
+<rect x="1044" y="492" width="158" height="17" rx="4" fill="#fff7ed"/>
+<text x="1123" y="504" text-anchor="middle" font-size="8.5" fill="#374151">telegram_chats</text>
+<text x="1123" y="522" text-anchor="middle" font-size="8"   fill="#9ca3af">project: gemini2-466412</text>
 
-  <!-- ═══ EXTERNAL SERVICES ═══ -->
+<!-- ── Telegram Bot service (y=550–668) ── -->
+<rect x="1034" y="550" width="178" height="118" rx="12" fill="white" stroke="#0088cc" stroke-width="2"/>
+<rect x="1034" y="550" width="178" height="36"  rx="12" fill="#2AABEE"/>
+<rect x="1034" y="570" width="178" height="16"  fill="#2AABEE"/>
+<!-- Telegram icon in header -->
+<circle cx="1070" cy="568" r="14" fill="rgba(255,255,255,0.25)"/>
+<path d="M1057,568 L1081,560 L1074,578 L1068,570Z" fill="white"/>
+<path d="M1068,570 L1071,576 L1074,578 L1070,568Z" fill="rgba(0,80,130,0.4)"/>
+<text x="1132" y="570" text-anchor="middle" font-size="12" font-weight="700" fill="white">Telegram Bot</text>
+<text x="1123" y="602" text-anchor="middle" font-size="8.5" fill="#374151">Trade &amp; Signal Alerts</text>
+<text x="1123" y="616" text-anchor="middle" font-size="8.5" fill="#374151">/status  /positions  /signals</text>
+<text x="1123" y="630" text-anchor="middle" font-size="8.5" fill="#374151">Inline Keyboard Actions</text>
+<text x="1123" y="658" text-anchor="middle" font-size="8"   fill="#9ca3af">api.telegram.org/bot{TOKEN}</text>
 
-  <!-- Alpaca Markets -->
-  <rect x="1032" y="86" width="178" height="130" rx="12" fill="white" stroke="#fbbf24" stroke-width="2"/>
-  <rect x="1032" y="86" width="178" height="36" rx="12" fill="#fbbf24"/>
-  <rect x="1032" y="106" width="178" height="16" fill="#fbbf24"/>
-  <rect x="1044" y="94" width="9" height="20" rx="1" fill="rgba(255,255,255,0.8)"/>
-  <line x1="1048" y1="89" x2="1048" y2="94" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
-  <line x1="1048" y1="114" x2="1048" y2="119" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
-  <rect x="1056" y="98" width="9" height="14" rx="1" fill="rgba(255,255,255,0.8)"/>
-  <line x1="1060" y1="92" x2="1060" y2="98" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
-  <line x1="1060" y1="112" x2="1060" y2="117" stroke="rgba(255,255,255,0.8)" stroke-width="2"/>
-  <text x="1121" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="white">Alpaca Markets</text>
-  <text x="1121" y="138" text-anchor="middle" font-size="9" fill="#374151">Paper Trading REST API</text>
-  <text x="1121" y="152" text-anchor="middle" font-size="9" fill="#374151">Live Market Data (bars)</text>
-  <text x="1121" y="166" text-anchor="middle" font-size="9" fill="#374151">Order Execution &amp; Fill</text>
-  <text x="1121" y="180" text-anchor="middle" font-size="9" fill="#374151">Portfolio History</text>
-  <text x="1121" y="196" text-anchor="middle" font-size="8" fill="#9ca3af">paper-api.alpaca.markets/v2</text>
+<!-- ═══ CONSUMER: USER (far right, TOP — above service boxes) ═══ -->
+<rect x="1248" y="78" width="134" height="114" rx="14" fill="white" stroke="#0284c7" stroke-width="2"/>
+<!-- Person icon -->
+<circle cx="1315" cy="118" r="24" fill="#0284c7"/>
+<circle cx="1315" cy="110" r="13" fill="white"/>
+<path    d="M1293,144 Q1293,130 1315,130 Q1337,130 1337,144Z" fill="white"/>
+<text x="1315" y="170" text-anchor="middle" font-size="11"  font-weight="700" fill="#0c4a6e">User / Trader</text>
+<text x="1315" y="184" text-anchor="middle" font-size="8.5" fill="#64748b">Browser / Dashboard</text>
 
-  <!-- Firebase Firestore -->
-  <rect x="1032" y="238" width="178" height="148" rx="12" fill="white" stroke="#f97316" stroke-width="2"/>
-  <rect x="1032" y="238" width="178" height="36" rx="12" fill="#f97316"/>
-  <rect x="1032" y="258" width="178" height="16" fill="#f97316"/>
-  <path d="M1048,246 Q1043,236 1050,230 Q1048,240 1055,237 Q1050,248 1056,253 Q1059,238 1065,230 Q1066,248 1059,255 Q1062,242 1068,244 Q1070,257 1060,262 Q1048,264 1046,254 Q1043,249 1048,246Z" fill="rgba(255,255,255,0.85)"/>
-  <text x="1121" y="258" text-anchor="middle" font-size="12" font-weight="700" fill="white">Firebase Firestore</text>
-  <rect x="1042" y="282" width="158" height="18" rx="4" fill="#fff7ed"/>
-  <text x="1121" y="295" text-anchor="middle" font-size="9" fill="#374151">trades</text>
-  <rect x="1042" y="303" width="158" height="18" rx="4" fill="#fff7ed"/>
-  <text x="1121" y="316" text-anchor="middle" font-size="9" fill="#374151">strategy_configs</text>
-  <rect x="1042" y="324" width="158" height="18" rx="4" fill="#fff7ed"/>
-  <text x="1121" y="337" text-anchor="middle" font-size="9" fill="#374151">portfolio_snapshots</text>
-  <rect x="1042" y="345" width="158" height="18" rx="4" fill="#fff7ed"/>
-  <text x="1121" y="358" text-anchor="middle" font-size="9" fill="#374151">trade_signals</text>
-  <text x="1121" y="380" text-anchor="middle" font-size="8" fill="#9ca3af">project: gemini2-466412</text>
+<!-- ═══ CONNECTING ARROWS (NO OVERLAP WITH BOXES) ═══ -->
 
-  <!-- Telegram Bot service box -->
-  <rect x="1032" y="408" width="178" height="130" rx="12" fill="white" stroke="#0088cc" stroke-width="2"/>
-  <rect x="1032" y="408" width="178" height="36" rx="12" fill="#0088cc"/>
-  <rect x="1032" y="428" width="178" height="16" fill="#0088cc"/>
-  <path d="M1042,415 L1072,406 L1063,428 L1056,420 Z" fill="rgba(255,255,255,0.85)"/>
-  <path d="M1056,420 L1059,426 L1063,428 L1059,418Z" fill="rgba(255,255,255,0.5)"/>
-  <text x="1121" y="428" text-anchor="middle" font-size="12" font-weight="700" fill="white">Telegram Bot</text>
-  <text x="1121" y="458" text-anchor="middle" font-size="9" fill="#374151">Trade &amp; Signal Alerts</text>
-  <text x="1121" y="472" text-anchor="middle" font-size="9" fill="#374151">/status  /positions</text>
-  <text x="1121" y="486" text-anchor="middle" font-size="9" fill="#374151">/signals  /trades</text>
-  <text x="1121" y="500" text-anchor="middle" font-size="9" fill="#374151">Inline Keyboard Actions</text>
-  <text x="1121" y="514" text-anchor="middle" font-size="9" fill="#374151">Deploy Notifications</text>
-  <text x="1121" y="528" text-anchor="middle" font-size="8" fill="#9ca3af">api.telegram.org/bot</text>
+<!-- User → App: routes at y=135 (ABOVE all service boxes which start at y=210) -->
+<line x1="1248" y1="135" x2="1022" y2="135"
+      stroke="#0284c7" stroke-width="2" stroke-dasharray="6,3"
+      marker-end="url(#arr-sky-l)"/>
+<text x="1135" y="126" text-anchor="middle" font-size="8" fill="#0369a1" font-weight="600">HTTP / REST requests</text>
 
-  <!-- ═══ CONSUMERS ═══ -->
+<!-- App ↔ Alpaca: y=260 and y=276 (within Alpaca box y=210–346) -->
+<line x1="1016" y1="260" x2="1034" y2="260"
+      stroke="#d97706" stroke-width="2.5" marker-end="url(#arr-gold)"/>
+<text x="1025" y="252" text-anchor="middle" font-size="8" fill="#b45309" font-weight="600">Orders</text>
+<line x1="1034" y1="278" x2="1016" y2="278"
+      stroke="#22c55e" stroke-width="2.5" stroke-dasharray="5,3"
+      marker-end="url(#arr-gn-l)"/>
+<text x="1025" y="294" text-anchor="middle" font-size="8" fill="#166534" font-weight="600">Market Data</text>
 
-  <!-- User / Browser -->
-  <rect x="1248" y="130" width="130" height="130" rx="14" fill="white" stroke="#0284c7" stroke-width="2"/>
-  <circle cx="1313" cy="168" r="22" fill="#0284c7"/>
-  <circle cx="1313" cy="161" r="12" fill="white"/>
-  <path d="M1292,192 Q1292,178 1313,178 Q1334,178 1334,192 Z" fill="white"/>
-  <text x="1313" y="222" text-anchor="middle" font-size="11" font-weight="700" fill="#0c4a6e">User / Trader</text>
-  <text x="1313" y="237" text-anchor="middle" font-size="9" fill="#64748b">Browser Dashboard</text>
-  <text x="1313" y="251" text-anchor="middle" font-size="9" fill="#64748b">localhost:3000</text>
+<!-- App ↔ Firebase: y=420 and y=438 (within Firebase box y=366–530) -->
+<line x1="1016" y1="420" x2="1034" y2="420"
+      stroke="#ea580c" stroke-width="2.5" marker-end="url(#arr-orange)"/>
+<text x="1025" y="413" text-anchor="middle" font-size="8" fill="#c2410c" font-weight="600">Write</text>
+<line x1="1034" y1="438" x2="1016" y2="438"
+      stroke="#ea580c" stroke-width="2" stroke-dasharray="5,3"
+      marker-end="url(#arr-or-l)"/>
+<text x="1025" y="454" text-anchor="middle" font-size="8" fill="#c2410c" font-weight="600">Read</text>
 
-  <!-- Mobile -->
-  <rect x="1248" y="290" width="130" height="100" rx="14" fill="white" stroke="#7c3aed" stroke-width="2"/>
-  <rect x="1281" y="302" width="34" height="52" rx="5" fill="#7c3aed"/>
-  <rect x="1287" y="308" width="22" height="36" rx="2" fill="#ede9fe"/>
-  <rect x="1292" y="347" width="12" height="4" rx="2" fill="white"/>
-  <text x="1327" y="316" font-size="10" fill="#374151">Mobile</text>
-  <text x="1327" y="330" font-size="10" fill="#374151">/ Bot</text>
-  <text x="1313" y="375" text-anchor="middle" font-size="9" fill="#64748b">Telegram alerts</text>
-  <text x="1313" y="388" text-anchor="middle" font-size="9" fill="#64748b">push notifications</text>
+<!-- App → Telegram: y=594 (within Telegram box y=550–668) -->
+<line x1="1016" y1="594" x2="1034" y2="594"
+      stroke="#0088cc" stroke-width="2.5" marker-end="url(#arr-tg)"/>
+<text x="1025" y="586" text-anchor="middle" font-size="8" fill="#0369a1" font-weight="600">Alerts</text>
 
-  <!-- ═══ CONNECTING ARROWS ═══ -->
+<!-- ═══ BOTTOM LOOPS ═══ -->
+<rect x="14"  y="638" width="960" height="48" rx="9" fill="#f0fdf4" stroke="#4ade80" stroke-width="1.5"/>
+<polygon points="26,662 40,650 40,674" fill="#16a34a"/>
+<line x1="40" y1="662" x2="962" y2="662" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="10,5"/>
+<text x="494" y="656" text-anchor="middle" font-size="11.5" font-weight="700" fill="#14532d">CI/CD Deployment Loop</text>
+<text x="494" y="674" text-anchor="middle" font-size="9.5"  fill="#374151">git push &#8594; GitHub Actions triggers &#8594; Vercel build (&lt;30s) &#8594; Auto-deploy to Edge Network &#8594; Live instantly</text>
 
-  <!-- App => Alpaca (orders) -->
-  <line x1="1012" y1="150" x2="1030" y2="150" stroke="#fbbf24" stroke-width="2.5"/>
-  <polygon points="1026,144 1036,150 1026,156" fill="#fbbf24"/>
-  <text x="1021" y="143" text-anchor="middle" font-size="8" fill="#b45309" font-weight="600">Orders</text>
-  <!-- Alpaca => App (market data) -->
-  <line x1="1030" y1="168" x2="1012" y2="168" stroke="#22c55e" stroke-width="2.5" stroke-dasharray="6,3"/>
-  <polygon points="1016,162 1006,168 1016,174" fill="#22c55e"/>
-  <text x="1021" y="184" text-anchor="middle" font-size="8" fill="#166534" font-weight="600">Market Data</text>
+<rect x="14"  y="696" width="960" height="48" rx="9" fill="#fef3c7" stroke="#fde68a" stroke-width="1.5"/>
+<polygon points="26,720 40,708 40,732" fill="#d97706"/>
+<line x1="40" y1="720" x2="962" y2="720" stroke="#d97706" stroke-width="1.5" stroke-dasharray="10,5"/>
+<text x="494" y="714" text-anchor="middle" font-size="11.5" font-weight="700" fill="#92400e">Auto-Trading Cycle (every 60s)</text>
+<text x="494" y="732" text-anchor="middle" font-size="9.5"  fill="#374151">Scan Symbols &#8594; Generate Signals &#8594; Risk Check &#8594; Execute Orders &#8594; Save Snapshot &#8594; Notify Telegram</text>
 
-  <!-- App <=> Firebase -->
-  <line x1="1012" y1="310" x2="1030" y2="310" stroke="#f97316" stroke-width="2.5"/>
-  <polygon points="1026,304 1036,310 1026,316" fill="#f97316"/>
-  <line x1="1030" y1="326" x2="1012" y2="326" stroke="#f97316" stroke-width="2" stroke-dasharray="6,3"/>
-  <polygon points="1016,320 1006,326 1016,332" fill="#f97316"/>
-  <text x="1021" y="305" text-anchor="middle" font-size="8" fill="#c2410c" font-weight="600">Write</text>
-  <text x="1021" y="342" text-anchor="middle" font-size="8" fill="#c2410c" font-weight="600">Read</text>
+<!-- Monitor strip (right bottom) -->
+<rect x="984" y="638" width="400" height="106" rx="9" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="1184" y="656" text-anchor="middle" font-size="11" font-weight="700" fill="#374151">Monitor Performance</text>
+<rect x="996" y="664" width="74" height="28" rx="5" fill="#fbbf24"/>
+<text x="1033" y="682" text-anchor="middle" font-size="9" font-weight="700" fill="white">Alpaca</text>
+<line x1="1070" y1="678" x2="1082" y2="678" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-gy)"/>
+<rect x="1088" y="664" width="74" height="28" rx="5" fill="#f97316"/>
+<text x="1125" y="682" text-anchor="middle" font-size="9" font-weight="700" fill="white">Firestore</text>
+<line x1="1162" y1="678" x2="1174" y2="678" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-gy)"/>
+<rect x="1180" y="664" width="74" height="28" rx="5" fill="#3b82f6"/>
+<text x="1217" y="682" text-anchor="middle" font-size="9" font-weight="700" fill="white">Dashboard</text>
+<line x1="1254" y1="678" x2="1266" y2="678" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr-gy)"/>
+<rect x="1272" y="664" width="74" height="28" rx="5" fill="#2AABEE"/>
+<text x="1309" y="682" text-anchor="middle" font-size="9" font-weight="700" fill="white">Telegram</text>
+<text x="1184" y="726" text-anchor="middle" font-size="8.5" fill="#6b7280">Execute &#8594; Store &#8594; Display &#8594; Alert</text>
 
-  <!-- App => Telegram -->
-  <line x1="1012" y1="480" x2="1030" y2="480" stroke="#0088cc" stroke-width="2.5"/>
-  <polygon points="1026,474 1036,480 1026,486" fill="#0088cc"/>
-  <text x="1021" y="472" text-anchor="middle" font-size="8" fill="#0369a1" font-weight="600">Alerts</text>
-
-  <!-- User => App (HTTP) -->
-  <line x1="1246" y1="195" x2="1232" y2="195" stroke="#0284c7" stroke-width="2"/>
-  <line x1="1232" y1="195" x2="1232" y2="258" stroke="#0284c7" stroke-width="2" stroke-dasharray="6,3"/>
-  <line x1="1232" y1="258" x2="1014" y2="258" stroke="#0284c7" stroke-width="2" stroke-dasharray="6,3"/>
-  <polygon points="1018,252 1008,258 1018,264" fill="#0284c7"/>
-  <text x="1113" y="250" text-anchor="middle" font-size="8" fill="#0284c7" font-weight="600">HTTP / REST</text>
-
-  <!-- Mobile => Telegram -->
-  <line x1="1313" y1="390" x2="1313" y2="432" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <line x1="1313" y1="432" x2="1212" y2="432" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <polygon points="1216,426 1206,432 1216,438" fill="#7c3aed"/>
-
-  <!-- ═══ BOTTOM LOOPS ═══ -->
-
-  <!-- CI/CD Deploy Loop -->
-  <rect x="18" y="598" width="954" height="52" rx="10" fill="#f0fdf4" stroke="#4ade80" stroke-width="1.5"/>
-  <polygon points="30,624 44,612 44,636" fill="#16a34a"/>
-  <line x1="44" y1="624" x2="960" y2="624" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="10,5"/>
-  <text x="490" y="618" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d">CI/CD Deployment Loop</text>
-  <text x="490" y="638" text-anchor="middle" font-size="10" fill="#374151">git push  &#8594;  GitHub Actions triggers  &#8594;  Vercel build (&lt;30s)  &#8594;  Auto-deploy to Edge Network  &#8594;  Live instantly</text>
-
-  <!-- Auto-Trading Cycle -->
-  <rect x="18" y="662" width="954" height="52" rx="10" fill="#fef3c7" stroke="#fde68a" stroke-width="1.5"/>
-  <polygon points="30,688 44,676 44,700" fill="#d97706"/>
-  <line x1="44" y1="688" x2="960" y2="688" stroke="#d97706" stroke-width="1.5" stroke-dasharray="10,5"/>
-  <text x="490" y="682" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">Auto-Trading Cycle (every 60s)</text>
-  <text x="490" y="702" text-anchor="middle" font-size="10" fill="#374151">Scan Symbols  &#8594;  Generate Signals  &#8594;  Risk Check  &#8594;  Execute Orders  &#8594;  Save Snapshot  &#8594;  Notify Telegram</text>
-
-  <!-- Monitor box (right) -->
-  <rect x="984" y="598" width="398" height="116" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
-  <text x="1183" y="618" text-anchor="middle" font-size="11" font-weight="700" fill="#374151">Monitor Performance</text>
-  <rect x="996" y="628" width="80" height="30" rx="5" fill="#fbbf24"/>
-  <text x="1036" y="648" text-anchor="middle" font-size="9" font-weight="700" fill="white">Alpaca</text>
-  <line x1="1076" y1="643" x2="1090" y2="643" stroke="#94a3b8" stroke-width="2"/>
-  <polygon points="1086,638 1096,643 1086,648" fill="#94a3b8"/>
-  <rect x="1096" y="628" width="80" height="30" rx="5" fill="#f97316"/>
-  <text x="1136" y="648" text-anchor="middle" font-size="9" font-weight="700" fill="white">Firestore</text>
-  <line x1="1176" y1="643" x2="1190" y2="643" stroke="#94a3b8" stroke-width="2"/>
-  <polygon points="1186,638 1196,643 1186,648" fill="#94a3b8"/>
-  <rect x="1196" y="628" width="80" height="30" rx="5" fill="#3b82f6"/>
-  <text x="1236" y="648" text-anchor="middle" font-size="9" font-weight="700" fill="white">Dashboard</text>
-  <line x1="1276" y1="643" x2="1290" y2="643" stroke="#94a3b8" stroke-width="2"/>
-  <polygon points="1286,638 1296,643 1286,648" fill="#94a3b8"/>
-  <rect x="1296" y="628" width="78" height="30" rx="5" fill="#0088cc"/>
-  <text x="1335" y="648" text-anchor="middle" font-size="9" font-weight="700" fill="white">Telegram</text>
-  <text x="1183" y="694" text-anchor="middle" font-size="9" fill="#6b7280">Trade data: Execute &#8594; Store &#8594; Display &#8594; Alert</text>
-
-  <!-- LEGEND -->
-  <rect x="18" y="726" width="954" height="36" rx="8" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="36" y="740" font-size="10" font-weight="700" fill="#374151">Legend:</text>
-  <line x1="84" y1="739" x2="104" y2="739" stroke="#fbbf24" stroke-width="2.5"/>
-  <polygon points="100,734 110,739 100,744" fill="#fbbf24"/>
-  <text x="113" y="743" font-size="9" fill="#374151">Orders / Write</text>
-  <line x1="196" y1="739" x2="216" y2="739" stroke="#22c55e" stroke-width="2.5" stroke-dasharray="5,3"/>
-  <polygon points="212,734 222,739 212,744" fill="#22c55e"/>
-  <text x="225" y="743" font-size="9" fill="#374151">Market Data / Read</text>
-  <line x1="326" y1="739" x2="346" y2="739" stroke="#0284c7" stroke-width="2" stroke-dasharray="6,3"/>
-  <polygon points="342,734 352,739 342,744" fill="#0284c7"/>
-  <text x="355" y="743" font-size="9" fill="#374151">HTTP Request</text>
-  <line x1="436" y1="739" x2="456" y2="739" stroke="#0088cc" stroke-width="2"/>
-  <polygon points="452,734 462,739 452,744" fill="#0088cc"/>
-  <text x="465" y="743" font-size="9" fill="#374151">Alert / Notification</text>
-  <line x1="556" y1="739" x2="576" y2="739" stroke="#16a34a" stroke-width="2"/>
-  <polygon points="572,734 582,739 572,744" fill="#16a34a"/>
-  <text x="585" y="743" font-size="9" fill="#374151">CI/CD Deploy</text>
-  <line x1="656" y1="739" x2="676" y2="739" stroke="#8b5cf6" stroke-width="2"/>
-  <polygon points="672,734 682,739 672,744" fill="#8b5cf6"/>
-  <text x="685" y="743" font-size="9" fill="#374151">Dev Cycle Loop</text>
-  <text x="790" y="743" font-size="9" fill="#9ca3af">AlgoTrade v1.0 — Next.js 16 / Vercel / Alpaca / Firebase Firestore</text>
+<!-- ═══ LEGEND ═══ -->
+<rect x="14" y="752" width="960" height="0" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
 
 </svg>
