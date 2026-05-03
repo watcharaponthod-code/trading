@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 560" width="1060" height="560" font-family="'Segoe UI', Arial, sans-serif">
+  <rect width="1060" height="560" fill="#0f172a" rx="16"/>
+
+  <!-- Title -->
+  <text x="530" y="36" text-anchor="middle" font-size="19" font-weight="700" fill="#f1f5f9">Strategy Engine &amp; Risk Management Flow</text>
+
+  <!-- ─── STRATEGY BOXES (row 1) ─── -->
+  <!-- Stat Arb -->
+  <rect x="30" y="60" width="225" height="150" rx="10" fill="#1a2744" stroke="#3b82f6" stroke-width="2"/>
+  <rect x="30" y="60" width="225" height="36" rx="10" fill="#1e3a6e"/>
+  <rect x="30" y="85" width="225" height="11" rx="0" fill="#1e3a6e"/>
+  <text x="142" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#60a5fa">Statistical Arbitrage</text>
+  <text x="142" y="112" text-anchor="middle" font-size="10" fill="#93c5fd">Pairs: SPY/QQQ · GLD/SLV</text>
+  <text x="142" y="128" text-anchor="middle" font-size="10" fill="#93c5fd">OLS Hedge Ratio (beta)</text>
+  <text x="142" y="144" text-anchor="middle" font-size="10" fill="#93c5fd">Rolling Z-Score (period=20)</text>
+  <text x="142" y="160" text-anchor="middle" font-size="10" fill="#93c5fd">Entry Z: 1.5  |  Exit Z: 0.3</text>
+  <text x="142" y="176" text-anchor="middle" font-size="10" fill="#fbbf24">Short A + Long B (Z &gt; +1.5)</text>
+  <text x="142" y="192" text-anchor="middle" font-size="10" fill="#4ade80">Long A + Short B (Z &lt; -1.5)</text>
+
+  <!-- Mean Reversion -->
+  <rect x="280" y="60" width="225" height="150" rx="10" fill="#1e1b3a" stroke="#8b5cf6" stroke-width="2"/>
+  <rect x="280" y="60" width="225" height="36" rx="10" fill="#2d1d6e"/>
+  <rect x="280" y="85" width="225" height="11" rx="0" fill="#2d1d6e"/>
+  <text x="392" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#a5b4fc">Mean Reversion</text>
+  <text x="392" y="112" text-anchor="middle" font-size="10" fill="#c4b5fd">AAPL · MSFT · GOOGL · META · TSLA</text>
+  <text x="392" y="128" text-anchor="middle" font-size="10" fill="#c4b5fd">Bollinger Bands (20, 2σ)</text>
+  <text x="392" y="144" text-anchor="middle" font-size="10" fill="#c4b5fd">RSI(14)  Oversold &lt;35  Overbought &gt;65</text>
+  <text x="392" y="160" text-anchor="middle" font-size="10" fill="#c4b5fd">BB Position (0–1 range)</text>
+  <text x="392" y="176" text-anchor="middle" font-size="10" fill="#4ade80">Buy: BB &lt; 10% + RSI &lt; 35</text>
+  <text x="392" y="192" text-anchor="middle" font-size="10" fill="#fbbf24">Sell: BB &gt; 90% + RSI &gt; 55</text>
+
+  <!-- EMA Momentum -->
+  <rect x="530" y="60" width="225" height="150" rx="10" fill="#1a2433" stroke="#06b6d4" stroke-width="2"/>
+  <rect x="530" y="60" width="225" height="36" rx="10" fill="#1a3a4a"/>
+  <rect x="530" y="85" width="225" height="11" rx="0" fill="#1a3a4a"/>
+  <text x="642" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#67e8f9">EMA Momentum</text>
+  <text x="642" y="112" text-anchor="middle" font-size="10" fill="#a5f3fc">NVDA · AMD · TSLA · SOXL · QQQ</text>
+  <text x="642" y="128" text-anchor="middle" font-size="10" fill="#a5f3fc">EMA(9) vs EMA(21) crossover</text>
+  <text x="642" y="144" text-anchor="middle" font-size="10" fill="#a5f3fc">MACD histogram cross</text>
+  <text x="642" y="160" text-anchor="middle" font-size="10" fill="#a5f3fc">VWAP + Volume spike 1.3x avg</text>
+  <text x="642" y="176" text-anchor="middle" font-size="10" fill="#4ade80">Buy: EMA cross up + MACD + VWAP</text>
+  <text x="642" y="192" text-anchor="middle" font-size="10" fill="#fbbf24">Sell: EMA cross down + RSI &gt; 25</text>
+
+  <!-- Pairs Trading -->
+  <rect x="780" y="60" width="250" height="150" rx="10" fill="#1e2a1a" stroke="#22c55e" stroke-width="2"/>
+  <rect x="780" y="60" width="250" height="36" rx="10" fill="#1a3a1a"/>
+  <rect x="780" y="85" width="250" height="11" rx="0" fill="#1a3a1a"/>
+  <text x="905" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#4ade80">Pairs Trading</text>
+  <text x="905" y="112" text-anchor="middle" font-size="10" fill="#86efac">Pairs: GLD/SLV · AAPL/MSFT</text>
+  <text x="905" y="128" text-anchor="middle" font-size="10" fill="#86efac">NVDA/AMD · KO/PEP · SPY/QQQ</text>
+  <text x="905" y="144" text-anchor="middle" font-size="10" fill="#86efac">Dollar-neutral: qtyB = β × qtyA</text>
+  <text x="905" y="160" text-anchor="middle" font-size="10" fill="#86efac">Cointegration check (ADF proxy)</text>
+  <text x="905" y="176" text-anchor="middle" font-size="10" fill="#86efac">Stop-Z: 3.0  |  Min corr: 0.60</text>
+  <text x="905" y="192" text-anchor="middle" font-size="10" fill="#86efac">Half-life mean reversion estimate</text>
+
+  <!-- Down arrows from strategies -->
+  <line x1="142" y1="210" x2="142" y2="248" stroke="#475569" stroke-width="1.5" marker-end="url(#a1)"/>
+  <line x1="392" y1="210" x2="392" y2="248" stroke="#475569" stroke-width="1.5" marker-end="url(#a1)"/>
+  <line x1="642" y1="210" x2="642" y2="248" stroke="#475569" stroke-width="1.5" marker-end="url(#a1)"/>
+  <line x1="905" y1="210" x2="905" y2="248" stroke="#475569" stroke-width="1.5" marker-end="url(#a1)"/>
+
+  <!-- ─── RISK MANAGER (row 2) ─── -->
+  <rect x="30" y="248" width="1000" height="120" rx="10" fill="#2a1515" stroke="#ef4444" stroke-width="2"/>
+  <text x="530" y="270" text-anchor="middle" font-size="13" font-weight="700" fill="#fca5a5">Risk Manager</text>
+  <line x1="50" y1="277" x2="1010" y2="277" stroke="#4a2020" stroke-width="1"/>
+
+  <!-- Risk boxes -->
+  <rect x="50" y="285" width="170" height="68" rx="8" fill="#1a1010" stroke="#dc2626" stroke-width="1"/>
+  <text x="135" y="303" text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">Kelly Criterion</text>
+  <text x="135" y="320" text-anchor="middle" font-size="9.5" fill="#fca5a5">winRate, avgWin/avgLoss</text>
+  <text x="135" y="336" text-anchor="middle" font-size="9.5" fill="#fca5a5">Half-Kelly safety cap</text>
+  <text x="135" y="347" text-anchor="middle" font-size="9" fill="#9ca3af">max 10% per position</text>
+
+  <rect x="238" y="285" width="180" height="68" rx="8" fill="#1a1010" stroke="#dc2626" stroke-width="1"/>
+  <text x="328" y="303" text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">ATR Position Sizing</text>
+  <text x="328" y="320" text-anchor="middle" font-size="9.5" fill="#fca5a5">dollarRisk = equity × 1%</text>
+  <text x="328" y="336" text-anchor="middle" font-size="9.5" fill="#fca5a5">qty = dollarRisk / (ATR × SLmult)</text>
+  <text x="328" y="347" text-anchor="middle" font-size="9" fill="#9ca3af">cap: 5% equity per symbol</text>
+
+  <rect x="436" y="285" width="190" height="68" rx="8" fill="#1a1010" stroke="#dc2626" stroke-width="1"/>
+  <text x="531" y="303" text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">Portfolio Heat Check</text>
+  <text x="531" y="320" text-anchor="middle" font-size="9.5" fill="#fca5a5">Max total exposure: 20%</text>
+  <text x="531" y="336" text-anchor="middle" font-size="9.5" fill="#fca5a5">Max per position: 5%</text>
+  <text x="531" y="347" text-anchor="middle" font-size="9" fill="#9ca3af">Block new orders if heat &gt; 20%</text>
+
+  <rect x="644" y="285" width="200" height="68" rx="8" fill="#1a1010" stroke="#dc2626" stroke-width="1"/>
+  <text x="744" y="303" text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">Circuit Breaker</text>
+  <text x="744" y="320" text-anchor="middle" font-size="9.5" fill="#fca5a5">Daily loss &gt; -3% → halt</text>
+  <text x="744" y="336" text-anchor="middle" font-size="9.5" fill="#fca5a5">Drawdown &gt; -8% → pause</text>
+  <text x="744" y="347" text-anchor="middle" font-size="9" fill="#9ca3af">assessPortfolioRisk()</text>
+
+  <rect x="862" y="285" width="155" height="68" rx="8" fill="#1a1010" stroke="#dc2626" stroke-width="1"/>
+  <text x="939" y="303" text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">TP / SL Targets</text>
+  <text x="939" y="320" text-anchor="middle" font-size="9.5" fill="#fca5a5">TP = price + ATR × 2.0</text>
+  <text x="939" y="336" text-anchor="middle" font-size="9.5" fill="#fca5a5">SL = price − ATR × 1.0</text>
+  <text x="939" y="347" text-anchor="middle" font-size="9" fill="#9ca3af">ATR-based dynamic levels</text>
+
+  <!-- Down arrow from Risk to Orders -->
+  <line x1="530" y1="368" x2="530" y2="408" stroke="#ef4444" stroke-width="2" marker-end="url(#a2)"/>
+
+  <!-- ─── ORDER EXECUTION (row 3) ─── -->
+  <rect x="30" y="408" width="1000" height="90" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="530" y="428" text-anchor="middle" font-size="13" font-weight="700" fill="#94a3b8">Order Execution — Alpaca API</text>
+  <line x1="50" y1="435" x2="1010" y2="435" stroke="#334155" stroke-width="1"/>
+
+  <!-- Order type boxes -->
+  <rect x="80" y="445" width="230" height="42" rx="8" fill="#1a2744" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="195" y="461" text-anchor="middle" font-size="11" font-weight="700" fill="#60a5fa">Bracket Order</text>
+  <text x="195" y="478" text-anchor="middle" font-size="9.5" fill="#93c5fd">Entry (market) + Take-Profit limit + Stop-Loss stop</text>
+
+  <rect x="360" y="445" width="200" height="42" rx="8" fill="#1e1b3a" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="460" y="461" text-anchor="middle" font-size="11" font-weight="700" fill="#a5b4fc">Market Order</text>
+  <text x="460" y="478" text-anchor="middle" font-size="9.5" fill="#c4b5fd">Stat-Arb pairs (immediate fill)</text>
+
+  <rect x="610" y="445" width="200" height="42" rx="8" fill="#1a2433" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="710" y="461" text-anchor="middle" font-size="11" font-weight="700" fill="#67e8f9">Limit Order</text>
+  <text x="710" y="478" text-anchor="middle" font-size="9.5" fill="#a5f3fc">Manual via Order Form tab</text>
+
+  <rect x="860" y="445" width="150" height="42" rx="8" fill="#162434" stroke="#0ea5e9" stroke-width="1.5"/>
+  <text x="935" y="461" text-anchor="middle" font-size="11" font-weight="700" fill="#38bdf8">Trailing Stop</text>
+  <text x="935" y="478" text-anchor="middle" font-size="9.5" fill="#7dd3fc">trail_percent or trail_price</text>
+
+  <!-- Down arrow from Orders to Result -->
+  <line x1="530" y1="498" x2="530" y2="523" stroke="#334155" stroke-width="2" marker-end="url(#a3)"/>
+
+  <!-- ─── RESULT ROW ─── -->
+  <rect x="30" y="523" width="1000" height="22" rx="6" fill="#0d2010" stroke="#16a34a" stroke-width="1"/>
+  <text x="530" y="539" text-anchor="middle" font-size="10" fill="#4ade80">Order filled → insertTrade() + insertTradeSignal() → insertPortfolioSnapshot() → Telegram notifyTrade()</text>
+
+  <!-- DEFS -->
+  <defs>
+    <marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+    </marker>
+    <marker id="a2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ef4444"/>
+    </marker>
+    <marker id="a3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#334155"/>
+    </marker>
+  </defs>
+</svg>

@@ -15,6 +15,7 @@ import {
 export async function GET() {
   try {
     await runMigrations()
+
     const configs = await getStrategyConfigs()
     return NextResponse.json({ strategies: configs })
   } catch (err: unknown) {
@@ -26,7 +27,7 @@ export async function GET() {
 // PATCH – update strategy params / active state
 export async function PATCH(req: NextRequest) {
   try {
-    runMigrations()
+    await runMigrations()
     const body = await req.json()
     const { strategyId, params, is_active, auto_execute, symbols } = body
 
@@ -49,7 +50,7 @@ export async function PATCH(req: NextRequest) {
 // POST – run a strategy and optionally execute trades, persist to SQLite
 export async function POST(req: NextRequest) {
   try {
-    runMigrations()
+    await runMigrations()
     const body = await req.json()
     const { strategyId, customConfig, dryRun = true } = body
 

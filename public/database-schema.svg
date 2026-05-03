@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" width="960" height="500" font-family="'Segoe UI', Arial, sans-serif">
+  <rect width="960" height="500" fill="#0f172a" rx="16"/>
+  <text x="480" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#f1f5f9">Database Schema</text>
+
+  <!-- ─── trades ─── -->
+  <rect x="30" y="56" width="190" height="330" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <rect x="30" y="56" width="190" height="32" rx="8" fill="#1e3a6e"/>
+  <rect x="30" y="78" width="190" height="10" rx="0" fill="#1e3a6e"/>
+  <text x="125" y="77" text-anchor="middle" font-size="13" font-weight="700" fill="#60a5fa">trades</text>
+  <line x1="46" y1="89" x2="204" y2="89" stroke="#334155" stroke-width="1"/>
+  <text x="46" y="105" font-size="9.5" fill="#fbbf24">PK  id</text>
+  <text x="46" y="121" font-size="9.5" fill="#94a3b8">    symbol  TEXT</text>
+  <text x="46" y="137" font-size="9.5" fill="#94a3b8">    side  TEXT (buy|sell)</text>
+  <text x="46" y="153" font-size="9.5" fill="#94a3b8">    qty  REAL</text>
+  <text x="46" y="169" font-size="9.5" fill="#94a3b8">    price  REAL</text>
+  <text x="46" y="185" font-size="9.5" fill="#94a3b8">    order_id  TEXT</text>
+  <text x="46" y="201" font-size="9.5" fill="#94a3b8">    status  TEXT</text>
+  <text x="46" y="217" font-size="9.5" fill="#94a3b8" text-decoration="underline">FK  strategy_id</text>
+  <text x="46" y="233" font-size="9.5" fill="#94a3b8">    signal_reason  TEXT</text>
+  <text x="46" y="249" font-size="9.5" fill="#94a3b8">    confidence  REAL</text>
+  <text x="46" y="265" font-size="9.5" fill="#94a3b8">    pnl  REAL</text>
+  <text x="46" y="281" font-size="9.5" fill="#94a3b8">    created_at</text>
+  <text x="46" y="297" font-size="9.5" fill="#94a3b8">    executed_at</text>
+  <text x="46" y="313" font-size="9.5" fill="#94a3b8">    filled_avg_price</text>
+  <text x="46" y="329" font-size="9.5" fill="#94a3b8">    filled_qty</text>
+  <line x1="46" y1="338" x2="204" y2="338" stroke="#334155" stroke-width="1"/>
+  <text x="125" y="355" text-anchor="middle" font-size="9" fill="#64748b">idx: created_at DESC</text>
+  <text x="125" y="369" text-anchor="middle" font-size="9" fill="#64748b">idx: symbol, strategy_id</text>
+
+  <!-- ─── strategy_configs ─── -->
+  <rect x="250" y="56" width="190" height="270" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+  <rect x="250" y="56" width="190" height="32" rx="8" fill="#2d1d6e"/>
+  <rect x="250" y="78" width="190" height="10" rx="0" fill="#2d1d6e"/>
+  <text x="345" y="77" text-anchor="middle" font-size="13" font-weight="700" fill="#a5b4fc">strategy_configs</text>
+  <line x1="266" y1="89" x2="424" y2="89" stroke="#334155" stroke-width="1"/>
+  <text x="266" y="105" font-size="9.5" fill="#fbbf24">PK  id</text>
+  <text x="266" y="121" font-size="9.5" fill="#f59e0b">UK  strategy_id  TEXT</text>
+  <text x="266" y="137" font-size="9.5" fill="#94a3b8">    name  TEXT</text>
+  <text x="266" y="153" font-size="9.5" fill="#94a3b8">    description  TEXT</text>
+  <text x="266" y="169" font-size="9.5" fill="#94a3b8">    symbols  TEXT (JSON)</text>
+  <text x="266" y="185" font-size="9.5" fill="#94a3b8">    params  TEXT (JSON)</text>
+  <text x="266" y="201" font-size="9.5" fill="#94a3b8">    is_active  INTEGER</text>
+  <text x="266" y="217" font-size="9.5" fill="#94a3b8">    auto_execute  INTEGER</text>
+  <text x="266" y="233" font-size="9.5" fill="#94a3b8">    created_at</text>
+  <text x="266" y="249" font-size="9.5" fill="#94a3b8">    updated_at</text>
+  <line x1="266" y1="260" x2="424" y2="260" stroke="#334155" stroke-width="1"/>
+  <text x="345" y="278" text-anchor="middle" font-size="9" fill="#64748b">Seeds: stat_arb, mean_reversion</text>
+  <text x="345" y="293" text-anchor="middle" font-size="9" fill="#64748b">momentum, pairs_trading</text>
+
+  <!-- ─── portfolio_snapshots ─── -->
+  <rect x="470" y="56" width="195" height="230" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+  <rect x="470" y="56" width="195" height="32" rx="8" fill="#0d3a2a"/>
+  <rect x="470" y="78" width="195" height="10" rx="0" fill="#0d3a2a"/>
+  <text x="567" y="77" text-anchor="middle" font-size="13" font-weight="700" fill="#34d399">portfolio_snapshots</text>
+  <line x1="486" y1="89" x2="649" y2="89" stroke="#334155" stroke-width="1"/>
+  <text x="486" y="105" font-size="9.5" fill="#fbbf24">PK  id</text>
+  <text x="486" y="121" font-size="9.5" fill="#94a3b8">    equity  REAL</text>
+  <text x="486" y="137" font-size="9.5" fill="#94a3b8">    cash  REAL</text>
+  <text x="486" y="153" font-size="9.5" fill="#94a3b8">    buying_power  REAL</text>
+  <text x="486" y="169" font-size="9.5" fill="#94a3b8">    portfolio_value  REAL</text>
+  <text x="486" y="185" font-size="9.5" fill="#94a3b8">    profit_loss  REAL</text>
+  <text x="486" y="201" font-size="9.5" fill="#94a3b8">    profit_loss_pct  REAL</text>
+  <text x="486" y="217" font-size="9.5" fill="#94a3b8">    created_at</text>
+  <line x1="486" y1="226" x2="649" y2="226" stroke="#334155" stroke-width="1"/>
+  <text x="567" y="243" text-anchor="middle" font-size="9" fill="#64748b">idx: created_at ASC</text>
+  <text x="567" y="258" text-anchor="middle" font-size="9" fill="#64748b">saved on every /api/account hit</text>
+
+  <!-- ─── trade_signals ─── -->
+  <rect x="690" y="56" width="195" height="290" rx="8" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+  <rect x="690" y="56" width="195" height="32" rx="8" fill="#1a3a4a"/>
+  <rect x="690" y="78" width="195" height="10" rx="0" fill="#1a3a4a"/>
+  <text x="787" y="77" text-anchor="middle" font-size="13" font-weight="700" fill="#67e8f9">trade_signals</text>
+  <line x1="706" y1="89" x2="869" y2="89" stroke="#334155" stroke-width="1"/>
+  <text x="706" y="105" font-size="9.5" fill="#fbbf24">PK  id</text>
+  <text x="706" y="121" font-size="9.5" fill="#94a3b8" text-decoration="underline">FK  strategy_id</text>
+  <text x="706" y="137" font-size="9.5" fill="#94a3b8">    symbol  TEXT</text>
+  <text x="706" y="153" font-size="9.5" fill="#94a3b8">    action (buy|sell|hold)</text>
+  <text x="706" y="169" font-size="9.5" fill="#94a3b8">    qty  REAL</text>
+  <text x="706" y="185" font-size="9.5" fill="#94a3b8">    reason  TEXT</text>
+  <text x="706" y="201" font-size="9.5" fill="#94a3b8">    confidence  REAL</text>
+  <text x="706" y="217" font-size="9.5" fill="#94a3b8">    price_at_signal  REAL</text>
+  <text x="706" y="233" font-size="9.5" fill="#94a3b8">    was_executed  INTEGER</text>
+  <text x="706" y="249" font-size="9.5" fill="#94a3b8" text-decoration="underline">FK  trade_id → trades.id</text>
+  <text x="706" y="265" font-size="9.5" fill="#94a3b8">    created_at</text>
+  <line x1="706" y1="274" x2="869" y2="274" stroke="#334155" stroke-width="1"/>
+  <text x="787" y="290" text-anchor="middle" font-size="9" fill="#64748b">idx: created_at, strategy_id</text>
+  <text x="787" y="305" text-anchor="middle" font-size="9" fill="#64748b">linked to trades on execution</text>
+
+  <!-- ─── telegram_chats ─── -->
+  <rect x="470" y="310" width="195" height="130" rx="8" fill="#1e293b" stroke="#0ea5e9" stroke-width="2"/>
+  <rect x="470" y="310" width="195" height="32" rx="8" fill="#162434"/>
+  <rect x="470" y="332" width="195" height="10" rx="0" fill="#162434"/>
+  <text x="567" y="330" text-anchor="middle" font-size="13" font-weight="700" fill="#38bdf8">telegram_chats</text>
+  <line x1="486" y1="343" x2="649" y2="343" stroke="#334155" stroke-width="1"/>
+  <text x="486" y="359" font-size="9.5" fill="#fbbf24">PK  chat_id  TEXT</text>
+  <text x="486" y="375" font-size="9.5" fill="#94a3b8">    username  TEXT</text>
+  <text x="486" y="391" font-size="9.5" fill="#94a3b8">    created_at</text>
+  <line x1="486" y1="401" x2="649" y2="401" stroke="#334155" stroke-width="1"/>
+  <text x="567" y="418" text-anchor="middle" font-size="9" fill="#64748b">upserted via /start command</text>
+  <text x="567" y="433" text-anchor="middle" font-size="9" fill="#64748b">used for broadcast notifications</text>
+
+  <!-- ─── RELATION LINES ─── -->
+  <!-- strategy_configs → trades (strategy_id) -->
+  <line x1="440" y1="150" x2="450" y2="150" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="450" y1="150" x2="450" y2="217" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="450" y1="217" x2="440" y2="217" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#fk1)"/>
+  <text x="455" y="188" font-size="8.5" fill="#8b5cf6">1</text>
+  <text x="435" y="213" font-size="8.5" fill="#8b5cf6">N</text>
+
+  <!-- strategy_configs → trade_signals (strategy_id) -->
+  <line x1="440" y1="165" x2="460" y2="165" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="460" y1="165" x2="460" y2="120" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="460" y1="120" x2="690" y2="120" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#fk1)"/>
+
+  <!-- trades → trade_signals (trade_id) -->
+  <line x1="220" y1="260" x2="240" y2="260" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="240" y1="260" x2="240" y2="248" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="240" y1="248" x2="690" y2="248" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#fk2)"/>
+  <text x="465" y="244" font-size="8" fill="#3b82f6">trade_id</text>
+
+  <!-- Legend -->
+  <rect x="30" y="420" width="410" height="62" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="46" y="440" font-size="10" font-weight="600" fill="#94a3b8">Legend</text>
+  <rect x="46" y="448" width="12" height="12" rx="3" fill="#fbbf24"/>
+  <text x="64" y="459" font-size="9.5" fill="#94a3b8">PK = Primary Key</text>
+  <rect x="160" y="448" width="12" height="12" rx="3" fill="#f59e0b"/>
+  <text x="178" y="459" font-size="9.5" fill="#94a3b8">UK = Unique Key</text>
+  <line x1="46" y1="468" x2="70" y2="468" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="78" y="472" font-size="9.5" fill="#94a3b8">FK relationship</text>
+  <text x="46" y="476" font-size="9" fill="#64748b">Dual-mode: SQLite (local dev) | PostgreSQL (Vercel/production)</text>
+
+  <defs>
+    <marker id="fk1" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto">
+      <path d="M0,0 L0,5 L7,2.5 z" fill="#8b5cf6"/>
+    </marker>
+    <marker id="fk2" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto">
+      <path d="M0,0 L0,5 L7,2.5 z" fill="#3b82f6"/>
+    </marker>
+  </defs>
+</svg>

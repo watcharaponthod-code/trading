@@ -5,7 +5,7 @@ import { insertPortfolioSnapshot, runMigrations } from "@/lib/db"
 export async function GET() {
   try {
     // Ensure DB tables exist (idempotent)
-    runMigrations()
+    await runMigrations()
 
     const [account, positions, history] = await Promise.all([
       getAccount(),
@@ -18,7 +18,7 @@ export async function GET() {
       const equity = Number(account.equity)
       const lastEquity = Number(account.last_equity)
       if (equity > 0 && Number.isFinite(equity)) {
-        insertPortfolioSnapshot({
+        await insertPortfolioSnapshot({
           equity,
           cash: Number(account.cash) || 0,
           buying_power: Number(account.buying_power) || 0,

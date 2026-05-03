@@ -1,0 +1,243 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 720" width="1100" height="720" font-family="'Segoe UI', Arial, sans-serif">
+  <!-- Background -->
+  <rect width="1100" height="720" fill="#0f172a" rx="16"/>
+
+  <!-- Title -->
+  <text x="550" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#f1f5f9">AlgoTrade — System Architecture</text>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- LAYER 1 — EXTERNAL SERVICES (top) -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <rect x="30" y="60" width="1040" height="90" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="550" y="80" text-anchor="middle" font-size="11" fill="#64748b" font-weight="600" letter-spacing="1.5">EXTERNAL SERVICES</text>
+
+  <!-- Alpaca Markets box -->
+  <rect x="80" y="88" width="200" height="50" rx="8" fill="#1a2744" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="180" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#60a5fa">Alpaca Markets API</text>
+  <text x="180" y="126" text-anchor="middle" font-size="10" fill="#93c5fd">Paper / Live Trading</text>
+
+  <!-- Alpaca Data API box -->
+  <rect x="310" y="88" width="200" height="50" rx="8" fill="#1a2744" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="410" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#a5b4fc">Alpaca Data API</text>
+  <text x="410" y="126" text-anchor="middle" font-size="10" fill="#c7d2fe">Bars · Quotes · Latest</text>
+
+  <!-- Telegram API box -->
+  <rect x="540" y="88" width="180" height="50" rx="8" fill="#162434" stroke="#0ea5e9" stroke-width="1.5"/>
+  <text x="630" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#38bdf8">Telegram Bot API</text>
+  <text x="630" y="126" text-anchor="middle" font-size="10" fill="#7dd3fc">Notifications · Commands</text>
+
+  <!-- PostgreSQL box -->
+  <rect x="750" y="88" width="160" height="50" rx="8" fill="#1a2430" stroke="#10b981" stroke-width="1.5"/>
+  <text x="830" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#34d399">PostgreSQL</text>
+  <text x="830" y="126" text-anchor="middle" font-size="10" fill="#6ee7b7">Neon / Supabase</text>
+
+  <!-- SQLite box -->
+  <rect x="930" y="88" width="140" height="50" rx="8" fill="#1a2430" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="1000" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#fbbf24">SQLite</text>
+  <text x="1000" y="126" text-anchor="middle" font-size="10" fill="#fcd34d">Local Dev</text>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- LAYER 2 — CORE LIBRARIES -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <rect x="30" y="175" width="1040" height="170" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="550" y="195" text-anchor="middle" font-size="11" fill="#64748b" font-weight="600" letter-spacing="1.5">CORE LIBRARIES</text>
+
+  <!-- lib/alpaca.ts -->
+  <rect x="55" y="205" width="155" height="125" rx="8" fill="#1a2744" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="132" y="225" text-anchor="middle" font-size="11" font-weight="700" fill="#93c5fd">lib/alpaca.ts</text>
+  <line x1="70" y1="232" x2="195" y2="232" stroke="#2d4a7a" stroke-width="1"/>
+  <text x="132" y="248" text-anchor="middle" font-size="9.5" fill="#cbd5e1">getAccount()</text>
+  <text x="132" y="263" text-anchor="middle" font-size="9.5" fill="#cbd5e1">getPositions()</text>
+  <text x="132" y="278" text-anchor="middle" font-size="9.5" fill="#cbd5e1">submitOrder()</text>
+  <text x="132" y="293" text-anchor="middle" font-size="9.5" fill="#cbd5e1">submitBracketOrder()</text>
+  <text x="132" y="308" text-anchor="middle" font-size="9.5" fill="#cbd5e1">getHistoricalBars()</text>
+
+  <!-- lib/strategy.ts -->
+  <rect x="230" y="205" width="155" height="125" rx="8" fill="#1e1b3a" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="307" y="225" text-anchor="middle" font-size="11" font-weight="700" fill="#c4b5fd">lib/strategy.ts</text>
+  <line x1="245" y1="232" x2="370" y2="232" stroke="#3b2e6e" stroke-width="1"/>
+  <text x="307" y="248" text-anchor="middle" font-size="9.5" fill="#cbd5e1">runStatArb()</text>
+  <text x="307" y="263" text-anchor="middle" font-size="9.5" fill="#cbd5e1">runMeanReversion()</text>
+  <text x="307" y="278" text-anchor="middle" font-size="9.5" fill="#cbd5e1">runMomentum()</text>
+  <text x="307" y="293" text-anchor="middle" font-size="9.5" fill="#cbd5e1">calcRSI / calcEMA</text>
+  <text x="307" y="308" text-anchor="middle" font-size="9.5" fill="#cbd5e1">calcBollingerBands()</text>
+
+  <!-- lib/stat-arb-engine.ts -->
+  <rect x="405" y="205" width="175" height="125" rx="8" fill="#1a2433" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="492" y="225" text-anchor="middle" font-size="11" font-weight="700" fill="#67e8f9">lib/stat-arb-engine.ts</text>
+  <line x1="420" y1="232" x2="565" y2="232" stroke="#1e3a4a" stroke-width="1"/>
+  <text x="492" y="248" text-anchor="middle" font-size="9.5" fill="#cbd5e1">analyzePair()</text>
+  <text x="492" y="263" text-anchor="middle" font-size="9.5" fill="#cbd5e1">ols() hedge ratio</text>
+  <text x="492" y="278" text-anchor="middle" font-size="9.5" fill="#cbd5e1">zScore() rolling</text>
+  <text x="492" y="293" text-anchor="middle" font-size="9.5" fill="#cbd5e1">isStationary()</text>
+  <text x="492" y="308" text-anchor="middle" font-size="9.5" fill="#cbd5e1">generateOrders()</text>
+
+  <!-- lib/risk-manager.ts -->
+  <rect x="600" y="205" width="170" height="125" rx="8" fill="#2a1a1a" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="685" y="225" text-anchor="middle" font-size="11" font-weight="700" fill="#fca5a5">lib/risk-manager.ts</text>
+  <line x1="615" y1="232" x2="755" y2="232" stroke="#4a2020" stroke-width="1"/>
+  <text x="685" y="248" text-anchor="middle" font-size="9.5" fill="#cbd5e1">kellyFraction()</text>
+  <text x="685" y="263" text-anchor="middle" font-size="9.5" fill="#cbd5e1">sizeByATR()</text>
+  <text x="685" y="278" text-anchor="middle" font-size="9.5" fill="#cbd5e1">assessPortfolioRisk()</text>
+  <text x="685" y="293" text-anchor="middle" font-size="9.5" fill="#cbd5e1">scoreMomentumSignal()</text>
+  <text x="685" y="308" text-anchor="middle" font-size="9.5" fill="#cbd5e1">scoreMeanReversionSignal()</text>
+
+  <!-- lib/db.ts -->
+  <rect x="790" y="205" width="130" height="125" rx="8" fill="#1a2430" stroke="#10b981" stroke-width="1.5"/>
+  <text x="855" y="225" text-anchor="middle" font-size="11" font-weight="700" fill="#34d399">lib/db.ts</text>
+  <line x1="805" y1="232" x2="905" y2="232" stroke="#1a4a3a" stroke-width="1"/>
+  <text x="855" y="248" text-anchor="middle" font-size="9.5" fill="#cbd5e1">insertTrade()</text>
+  <text x="855" y="263" text-anchor="middle" font-size="9.5" fill="#cbd5e1">getTrades()</text>
+  <text x="855" y="278" text-anchor="middle" font-size="9.5" fill="#cbd5e1">insertSignal()</text>
+  <text x="855" y="293" text-anchor="middle" font-size="9.5" fill="#cbd5e1">runMigrations()</text>
+  <text x="855" y="308" text-anchor="middle" font-size="9.5" fill="#cbd5e1">SQLite / Postgres</text>
+
+  <!-- lib/telegram-bot.ts -->
+  <rect x="940" y="205" width="115" height="125" rx="8" fill="#162434" stroke="#0ea5e9" stroke-width="1.5"/>
+  <text x="997" y="222" text-anchor="middle" font-size="10.5" font-weight="700" fill="#38bdf8">lib/telegram</text>
+  <text x="997" y="237" text-anchor="middle" font-size="10.5" font-weight="700" fill="#38bdf8">-bot.ts</text>
+  <line x1="955" y1="244" x2="1040" y2="244" stroke="#1e3a4a" stroke-width="1"/>
+  <text x="997" y="260" text-anchor="middle" font-size="9.5" fill="#cbd5e1">notifyTrade()</text>
+  <text x="997" y="275" text-anchor="middle" font-size="9.5" fill="#cbd5e1">notifySignal()</text>
+  <text x="997" y="290" text-anchor="middle" font-size="9.5" fill="#cbd5e1">handleStart()</text>
+  <text x="997" y="305" text-anchor="middle" font-size="9.5" fill="#cbd5e1">sendMessage()</text>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- LAYER 3 — API ROUTES -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <rect x="30" y="370" width="1040" height="85" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="550" y="390" text-anchor="middle" font-size="11" fill="#64748b" font-weight="600" letter-spacing="1.5">NEXT.JS API ROUTES (App Router)</text>
+
+  <!-- API route pills -->
+  <rect x="50" y="400" width="110" height="40" rx="20" fill="#1a2744" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="105" y="425" text-anchor="middle" font-size="10" fill="#93c5fd" font-weight="600">/api/account</text>
+
+  <rect x="175" y="400" width="100" height="40" rx="20" fill="#1a2744" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="225" y="425" text-anchor="middle" font-size="10" fill="#93c5fd" font-weight="600">/api/market</text>
+
+  <rect x="288" y="400" width="100" height="40" rx="20" fill="#1a2744" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="338" y="425" text-anchor="middle" font-size="10" fill="#93c5fd" font-weight="600">/api/orders</text>
+
+  <rect x="400" y="400" width="110" height="40" rx="20" fill="#1e1b3a" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="455" y="425" text-anchor="middle" font-size="10" fill="#c4b5fd" font-weight="600">/api/strategy</text>
+
+  <rect x="522" y="400" width="130" height="40" rx="20" fill="#2a1a1a" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="587" y="425" text-anchor="middle" font-size="10" fill="#fca5a5" font-weight="600">/api/auto-trader</text>
+
+  <rect x="664" y="400" width="110" height="40" rx="20" fill="#1a2433" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="719" y="425" text-anchor="middle" font-size="10" fill="#67e8f9" font-weight="600">/api/stat-arb</text>
+
+  <rect x="786" y="400" width="95" height="40" rx="20" fill="#1a2430" stroke="#10b981" stroke-width="1.5"/>
+  <text x="833" y="425" text-anchor="middle" font-size="10" fill="#34d399" font-weight="600">/api/trade</text>
+
+  <rect x="892" y="400" width="160" height="40" rx="20" fill="#162434" stroke="#0ea5e9" stroke-width="1.5"/>
+  <text x="972" y="425" text-anchor="middle" font-size="10" fill="#38bdf8" font-weight="600">/api/telegram/webhook</text>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- LAYER 4 — FRONTEND -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <rect x="30" y="480" width="1040" height="215" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="550" y="500" text-anchor="middle" font-size="11" fill="#64748b" font-weight="600" letter-spacing="1.5">FRONTEND — REACT DASHBOARD (app/page.tsx)</text>
+
+  <!-- Left sidebar -->
+  <rect x="55" y="510" width="155" height="170" rx="8" fill="#162030" stroke="#475569" stroke-width="1.5"/>
+  <text x="132" y="530" text-anchor="middle" font-size="11" font-weight="700" fill="#94a3b8">Left Sidebar</text>
+  <line x1="70" y1="537" x2="195" y2="537" stroke="#334155" stroke-width="1"/>
+  <text x="132" y="555" text-anchor="middle" font-size="10" fill="#64748b">Watchlist Panel</text>
+  <text x="132" y="573" text-anchor="middle" font-size="9.5" fill="#94a3b8">SPY QQQ AAPL MSFT</text>
+  <text x="132" y="589" text-anchor="middle" font-size="9.5" fill="#94a3b8">TSLA NVDA AMD GOOGL</text>
+  <text x="132" y="605" text-anchor="middle" font-size="9.5" fill="#94a3b8">GLD SLV</text>
+  <text x="132" y="621" text-anchor="middle" font-size="9.5" fill="#64748b">Live Price + % Change</text>
+  <text x="132" y="637" text-anchor="middle" font-size="9.5" fill="#64748b">5s auto-refresh</text>
+  <text x="132" y="653" text-anchor="middle" font-size="9.5" fill="#64748b">Click to set active symbol</text>
+
+  <!-- Center — Charts + Tables -->
+  <rect x="228" y="510" width="480" height="170" rx="8" fill="#0f1929" stroke="#475569" stroke-width="1.5"/>
+  <text x="468" y="530" text-anchor="middle" font-size="11" font-weight="700" fill="#94a3b8">Center — Charts &amp; Tables</text>
+  <line x1="243" y1="537" x2="693" y2="537" stroke="#334155" stroke-width="1"/>
+  <!-- Stat cards -->
+  <rect x="243" y="545" width="100" height="32" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="293" y="566" text-anchor="middle" font-size="9" fill="#94a3b8">Account Equity</text>
+  <rect x="353" y="545" width="100" height="32" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="403" y="566" text-anchor="middle" font-size="9" fill="#94a3b8">Buying Power</text>
+  <rect x="463" y="545" width="100" height="32" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="513" y="566" text-anchor="middle" font-size="9" fill="#94a3b8">Open Positions</text>
+  <rect x="573" y="545" width="100" height="32" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="623" y="566" text-anchor="middle" font-size="9" fill="#94a3b8">Today P&amp;L</text>
+  <!-- Charts -->
+  <rect x="243" y="585" width="225" height="40" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="1"/>
+  <text x="355" y="610" text-anchor="middle" font-size="9.5" fill="#60a5fa">Portfolio Equity Chart (Recharts)</text>
+  <rect x="477" y="585" width="210" height="40" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="582" y="610" text-anchor="middle" font-size="9.5" fill="#a5b4fc">P&amp;L History Chart (DB)</text>
+  <!-- Price chart + tables -->
+  <rect x="243" y="633" width="445" height="35" rx="6" fill="#1e293b" stroke="#06b6d4" stroke-width="1"/>
+  <text x="465" y="655" text-anchor="middle" font-size="9.5" fill="#67e8f9">Price Chart — 1Min / 5Min / 15Min / 1Hour / 1Day | Positions Table | Orders Table</text>
+
+  <!-- Right Sidebar -->
+  <rect x="726" y="510" width="320" height="170" rx="8" fill="#162030" stroke="#475569" stroke-width="1.5"/>
+  <text x="886" y="530" text-anchor="middle" font-size="11" font-weight="700" fill="#94a3b8">Right Sidebar — Tabs</text>
+  <line x1="741" y1="537" x2="1031" y2="537" stroke="#334155" stroke-width="1"/>
+  <!-- Tab pills -->
+  <rect x="741" y="545" width="68" height="28" rx="14" fill="#2a1a1a" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="775" y="564" text-anchor="middle" font-size="10" fill="#fca5a5" font-weight="600">Auto</text>
+  <rect x="818" y="545" width="75" height="28" rx="14" fill="#1a2433" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="855" y="564" text-anchor="middle" font-size="10" fill="#67e8f9" font-weight="600">Stat-Arb</text>
+  <rect x="902" y="545" width="80" height="28" rx="14" fill="#1e1b3a" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="942" y="564" text-anchor="middle" font-size="10" fill="#c4b5fd" font-weight="600">Strategy</text>
+  <rect x="991" y="545" width="60" height="28" rx="14" fill="#1a2744" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="1021" y="564" text-anchor="middle" font-size="10" fill="#93c5fd" font-weight="600">Order</text>
+  <!-- Tab descriptions -->
+  <text x="886" y="592" text-anchor="middle" font-size="9.5" fill="#94a3b8">Auto-Trader: Engine status · Run cycle · Risk config</text>
+  <text x="886" y="610" text-anchor="middle" font-size="9.5" fill="#94a3b8">Stat-Arb: Live pair analysis · Z-score · Correlation</text>
+  <text x="886" y="628" text-anchor="middle" font-size="9.5" fill="#94a3b8">Strategy: Select · Dry Run · Live Deploy · Auto-Run 60s</text>
+  <text x="886" y="646" text-anchor="middle" font-size="9.5" fill="#94a3b8">Order: Symbol · Side · Qty · Market / Limit</text>
+  <text x="886" y="664" text-anchor="middle" font-size="9.5" fill="#64748b">Telegram notifications on all live executions</text>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- CONNECTOR ARROWS (vertical, between layers) -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- External → Lib arrows -->
+  <line x1="180" y1="138" x2="132" y2="205" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arr-blue)"/>
+  <line x1="410" y1="138" x2="410" y2="205" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arr-blue)"/>
+  <line x1="630" y1="138" x2="997" y2="205" stroke="#0ea5e9" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arr-cyan)"/>
+  <line x1="830" y1="138" x2="855" y2="205" stroke="#10b981" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arr-green)"/>
+  <line x1="1000" y1="138" x2="855" y2="205" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arr-amber)"/>
+
+  <!-- Lib → API arrows -->
+  <line x1="132" y1="330" x2="105" y2="400" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <line x1="307" y1="330" x2="455" y2="400" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arr-violet)"/>
+  <line x1="492" y1="330" x2="719" y2="400" stroke="#06b6d4" stroke-width="1.5" marker-end="url(#arr-cyan)"/>
+  <line x1="685" y1="330" x2="587" y2="400" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <line x1="855" y1="330" x2="833" y2="400" stroke="#10b981" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="997" y1="330" x2="972" y2="400" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#arr-cyan)"/>
+
+  <!-- API → Frontend arrows -->
+  <line x1="550" y1="455" x2="550" y2="480" stroke="#475569" stroke-width="2" marker-end="url(#arr-gray)"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- ARROW MARKERS -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <defs>
+    <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arr-violet" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8b5cf6"/>
+    </marker>
+    <marker id="arr-cyan" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#06b6d4"/>
+    </marker>
+    <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#ef4444"/>
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#10b981"/>
+    </marker>
+    <marker id="arr-amber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+</svg>
