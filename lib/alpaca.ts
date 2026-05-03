@@ -2,6 +2,7 @@ const API_KEY = process.env.ALPACA_API_KEY!
 const API_SECRET = process.env.ALPACA_API_SECRET!
 const BASE_URL = process.env.ALPACA_BASE_URL || "https://paper-api.alpaca.markets/v2"
 const DATA_URL = "https://data.alpaca.markets/v2"
+const CRYPTO_DATA_URL = "https://data.alpaca.markets/v1beta3/crypto/us"
 
 const headers = {
   "APCA-API-KEY-ID": API_KEY,
@@ -93,7 +94,7 @@ export async function getHistoricalBars(
   let url: string
   if (isCrypto) {
     const encoded = encodeURIComponent(symbol)
-    url = `${DATA_URL}/crypto/bars?symbols=${encoded}&timeframe=${timeframe}&limit=${limit}&end=${end}`
+    url = `${CRYPTO_DATA_URL}/bars?symbols=${encoded}&timeframe=${timeframe}&limit=${limit}&end=${end}`
   } else {
     url = `${DATA_URL}/stocks/${symbol}/bars?timeframe=${timeframe}&limit=${limit}&feed=iex&end=${end}`
   }
