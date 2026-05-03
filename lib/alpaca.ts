@@ -144,12 +144,13 @@ export async function submitBracketOrder(params: {
   stop_loss_price: number
   limit_price?: number // if omitted → market entry
 }): Promise<any> {
+  const isCrypto = params.symbol.includes("/")
   const order: Record<string, any> = {
     symbol: params.symbol,
     qty: params.qty,
     side: params.side,
     type: params.limit_price ? "limit" : "market",
-    time_in_force: "day",
+    time_in_force: isCrypto ? "gtc" : "day",
     order_class: "bracket",
     take_profit: { limit_price: params.take_profit_price.toFixed(2) },
     stop_loss: { stop_price: params.stop_loss_price.toFixed(2) },
