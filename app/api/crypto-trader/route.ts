@@ -185,7 +185,6 @@ export async function POST(req: Request) {
         profit_loss_pct: lastEquity > 0 ? ((equity - lastEquity) / lastEquity) * 100 : 0,
       })
     } catch {}
- Drum:
 
     return NextResponse.json({
       status: dryRun ? "dry_run" : "executed",
