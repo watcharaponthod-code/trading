@@ -74,6 +74,37 @@ AlgoTrade เป็น Full-Stack Algorithmic Trading Dashboard สำหรั�
 
 ---
 
+
+## AI Trading Engine (Hourly)
+
+```
+Every Hour (Cron-job.org — free)
+         │
+         ▼
+  ┌─────────────┐     ┌──────────────────┐
+  │ Alpaca API  │────►│ Technical Analysis│
+  │ 1h Candles  │     │ RSI · EMA · VWAP  │
+  └─────────────┘     └────────┬─────────┘
+                               │
+                      ┌────────▼──────────┐
+                      │   ThaiLLM AI      │
+                      │ Pathumma-8B-Think │
+                      │ (thaillm.or.th)   │
+                      └────────┬──────────┘
+                               │
+               ┌───────────────┴───────────────┐
+               ▼                               ▼
+             BUY                             SELL
+               │                               │
+  ┌────────────▼───────────┐      ┌────────────▼──────────┐
+  │  Bracket Order         │      │  Close Position        │
+  │  ├─ Take Profit (+2.5%)│      │  (Market Order)        │
+  │  └─ Stop Loss  (-1.5%) │      └───────────────────────┘
+  └────────────────────────┘
+```
+
+> **Note:** Vercel Hobby = daily cron max. For hourly trading, use [Cron-job.org](https://cron-job.org) (free) to call `GET /api/cron/ai-trade` every hour with header `Authorization: Bearer {CRON_SECRET}`
+
 ## Tech Stack
 
 | Layer | Technology |
