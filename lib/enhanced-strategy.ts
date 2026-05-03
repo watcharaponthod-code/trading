@@ -126,7 +126,7 @@ export function runEnhancedMomentum(
 
     const pos = positionsBySymbol[symbol] || 0
     const lastClose = closes[closes.length - 1]
-    const lastRSI = rsi
+    const lastRSI = rsi[rsi.length - 1]
     const lastVolume = volumes[volumes.length - 1]
     const avgVolume = volumes.slice(-20).reduce((a, b) => a + b, 0) / 20
 
@@ -176,7 +176,7 @@ export function runEnhancedMomentum(
       })
     }
     // Exit when trend weakens
-    else if (pos > 0 && regime.trendStrength === "ranging") {
+    else if (pos > 0 && regime.trendStrength !== "strong_trend") {
       signals.push({
         symbol,
         action: "sell",
@@ -258,7 +258,7 @@ export function runEnhancedMeanReversion(
     const zScores = calcZScore(closes, period)
 
     const lastClose = closes[closes.length - 1]
-    const lastRSI = rsi
+    const lastRSI = rsi[rsi.length - 1]
     const lastUpper = upper[upper.length - 1]
     const lastLower = lower[lower.length - 1]
     const lastMiddle = middle[middle.length - 1]
