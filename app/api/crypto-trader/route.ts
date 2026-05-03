@@ -57,8 +57,9 @@ export async function POST(req: Request) {
     const buyingPower = Number(account.buying_power)
     log.push(`Equity: $${equity.toFixed(2)}, BP: $${buyingPower.toFixed(2)}`)
 
-    // Risk check
-    const risk = assessPortfolioRisk(equity, lastEquity, positions, config)
+    // Risk check — only count crypto positions (stock positions shouldn't block $10 crypto trades)
+    const cryptoPositions = positions.filter((p: any) => CRYPTO_SYMBOLS.includes(p.symbol))
+    const risk = assessPortfolioRisk(equity, lastEquity, cryptoPositions, config)
     if (!risk.canTrade && !dryRun) {
       return NextResponse.json({ status: "risk_blocked", reason: risk.reason, dryRun })
     }
