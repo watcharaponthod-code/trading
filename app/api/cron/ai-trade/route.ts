@@ -95,9 +95,9 @@ export async function GET(req: Request) {
     for (const symbol of SYMBOLS) {
       try {
         // Get 1-hour bars (last 30 candles)
-        const barsData = await getHistoricalBars(symbol, "1Hour", 30)
+        const barsData = await getHistoricalBars(symbol, "1Hour", 100)
         const bars: any[] = barsData.bars || []
-        if (bars.length < 10) {
+        if (bars.length < 5) {
           results.push({ symbol, skipped: "insufficient data" })
           continue
         }
