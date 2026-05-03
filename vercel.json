@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/trade",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/crypto",
+      "schedule": "* * * * *"
+    }
+  ]
+}
