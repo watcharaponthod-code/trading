@@ -12,7 +12,7 @@
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)
 ![Vercel](https://img.shields.io/badge/Vercel-Deploy-000000?logo=vercel)
 
-**แพลตฟอร์ม Algorithmic Trading แบบครบวงจร พร้อม UI แบบเรียลไทม์, กลยุทธ์หลายแบบ, Risk Management, และ Telegram Bot**
+
 
 </div>
 
