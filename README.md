@@ -104,8 +104,3 @@ vercel deploy --prod
 
 Vercel Cron Jobs จะรันอัตโนมัติทุก 1 นาทีหลัง deploy
 
----
-
-## Live Demo
-
-🌐 [https://trading-jet-iota.vercel.app](https://trading-jet-iota.vercel.app)
