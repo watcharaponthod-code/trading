@@ -15,7 +15,7 @@ export function getFirebaseApp(): admin.app.App {
   if (initialized) return admin.app()
 
   const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT
-  const projectId = process.env.FIREBASE_PROJECT_ID || "gemini2-466412"
+  const projectId = process.env.FIREBASE_PROJECT_ID || "algotrade-df8a0"
 
   if (!admin.apps.length) {
     if (serviceAccountJson) {
