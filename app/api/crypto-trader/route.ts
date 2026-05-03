@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import {
   getAccount, getPositions, getOpenOrders, getHistoricalBars,
-  cancelOrder, closePosition, submitBracketOrder
+  cancelOrder, closePosition, submitOrder
 } from "@/lib/alpaca"
 import {
   scoreMomentumSignal, scoreMeanReversionSignal,
@@ -148,13 +148,13 @@ export async function POST(req: Request) {
 
         if (!dryRun && risk.canTrade) {
           try {
-            // Crypto: use notional (dollar amount), not qty
-            const result = await submitBracketOrder({
+            // Crypto: use simple market order with notional (bracket orders not supported for crypto)
+            const result = await submitOrder({
               symbol: sym,
-              qty: Math.max(1, best.suggestedQty),
+              notional,
               side: tradeAction,
-              take_profit_price: parseFloat(best.tpPrice.toFixed(8)),
-              stop_loss_price: parseFloat(best.slPrice.toFixed(8)),
+              type: "market",
+              time_in_force: "gtc",
             })
             await insertTrade({
               symbol: sym,
