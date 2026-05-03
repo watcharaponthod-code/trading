@@ -102,8 +102,8 @@ export async function POST(req: Request) {
       if (posMap[sym]) continue // already holding
 
       try {
-        // Use 15Min bars for crypto (more volatile, need more recent data)
-        const data = await getHistoricalBars(sym, "15Min", 100)
+        // Use 1Hour bars for crypto — gives 4+ days of history (15Min only gives ~7h since midnight UTC)
+        const data = await getHistoricalBars(sym, "1Hour", 100)
         const bars: OHLCV[] = (data.bars || []).map((b: any) => ({
           o: Number(b.o), h: Number(b.h), l: Number(b.l), c: Number(b.c), v: Number(b.v)
         })).filter((b: OHLCV) => Number.isFinite(b.c) && b.c > 0)
