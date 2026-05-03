@@ -432,7 +432,7 @@ export default function TradingDashboard() {
           )}
 
           {/* Stats Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 min-w-0">
             <StatCard
               label="Account Equity"
               value={account?.equity ? `${parseFloat(account.equity).toLocaleString("en-US", { maximumFractionDigits: 2 })}` : "—"}
@@ -460,7 +460,7 @@ export default function TradingDashboard() {
           </div>
 
           {/* Charts Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 min-w-0">
             <div className="h-[220px] bg-[--color-panel] border border-[--color-panel-border] rounded-lg p-3">
               <p className="text-xs text-[--color-muted] mb-1 font-medium uppercase tracking-wider">Portfolio Equity</p>
               <div className="h-[176px]">
@@ -560,8 +560,8 @@ export default function TradingDashboard() {
 
 
         {/* Right Sidebar — Auto-Trade · Stat-Arb · Strategy · Order */}
-        <aside className="w-80 flex-shrink-0 border-l border-[--color-panel-border] flex flex-col overflow-y-auto hidden xl:flex">
-          <Tabs defaultValue="auto" className="flex flex-col h-full">
+        <aside className="w-80 flex-shrink-0 border-l border-[--color-panel-border] flex flex-col min-h-0 hidden xl:flex">
+          <Tabs defaultValue="auto" className="flex flex-col flex-1 min-h-0">
             <TabsList className="border-b border-[--color-panel-border] rounded-none bg-transparent px-2 flex-shrink-0 h-9 gap-0.5">
               <TabsTrigger value="auto" className="text-[10px] flex-1 h-7 px-1">
                 🤖 Auto
@@ -578,19 +578,19 @@ export default function TradingDashboard() {
             </TabsList>
 
             {/* 🤖 Auto-Trader */}
-            <TabsContent value="auto" className="flex-1 overflow-y-auto mt-0">
+            <TabsContent value="auto" className="flex-1 overflow-y-auto mt-0 min-h-0">
               <div className="p-3">
                 <AutoTraderPanel onRefreshPositions={fetchAll} />
               </div>
             </TabsContent>
 
-            <TabsContent value="statarb" className="flex-1 overflow-y-auto mt-0">
+            <TabsContent value="statarb" className="flex-1 overflow-y-auto mt-0 min-h-0">
               <div className="p-3">
                 <StatArbPanel />
               </div>
             </TabsContent>
 
-            <TabsContent value="strategy" className="flex-1 overflow-y-auto mt-0">
+            <TabsContent value="strategy" className="flex-1 overflow-y-auto mt-0 min-h-0">
               <div className="p-3">
                 <StrategyPanel
                   strategies={DEFAULT_STRATEGIES}
@@ -610,7 +610,7 @@ export default function TradingDashboard() {
               </div>
             </TabsContent>
 
-            <TabsContent value="order" className="flex-1 overflow-y-auto mt-0">
+            <TabsContent value="order" className="flex-1 overflow-y-auto mt-0 min-h-0">
               <div className="p-3">
                 <OrderForm onSubmit={submitOrder} isLoading={orderLoading} />
               </div>
