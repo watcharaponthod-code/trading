@@ -29,37 +29,8 @@ AlgoTrade เป็น Full-Stack Algorithmic Trading Dashboard สำหรั�
 
 ### Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        Vercel (Free)                         │
-│                                                             │
-│  ┌──────────────┐    ┌─────────────────────────────────┐   │
-│  │  Next.js UI  │    │        API Routes (Serverless)   │   │
-│  │  Dashboard   │    │  /api/auto-trader  (stocks)      │   │
-│  │  Charts      │    │  /api/crypto-trader (crypto)     │   │
-│  │  Watchlist   │    │  /api/account, /api/positions    │   │
-│  └──────────────┘    └─────────────────────────────────┘   │
-│                                          ↑                  │
-│  ┌───────────────────────────────────────┤                  │
-│  │      Vercel Cron Jobs (every 1 min)   │                  │
-│  │  GET /api/cron/trade   ──────────────►│                  │
-│  │  GET /api/cron/crypto  ──────────────►│                  │
-│  └───────────────────────────────────────┘                  │
-└─────────────────────────────────────────────────────────────┘
-              │                        │
-              ▼                        ▼
-   ┌─────────────────┐      ┌──────────────────┐
-   │  Alpaca Markets │      │   Neon PostgreSQL │
-   │  Paper/Live API │      │   (Trade History) │
-   │  Stocks + Crypto│      │   Signals, Orders │
-   └─────────────────┘      └──────────────────┘
-              │
-              ▼
-   ┌─────────────────┐
-   │  Telegram Bot   │
-   │  Trade Alerts   │
-   └─────────────────┘
-```
+![Architecture](public/architecture.svg)
+
 
 ---
 
@@ -77,33 +48,13 @@ AlgoTrade เป็น Full-Stack Algorithmic Trading Dashboard สำหรั�
 
 ## AI Trading Engine (Hourly)
 
-```
-Every Hour (Cron-job.org — free)
-         │
-         ▼
-  ┌─────────────┐     ┌──────────────────┐
-  │ Alpaca API  │────►│ Technical Analysis│
-  │ 1h Candles  │     │ RSI · EMA · VWAP  │
-  └─────────────┘     └────────┬─────────┘
-                               │
-                      ┌────────▼──────────┐
-                      │   ThaiLLM AI      │
-                      │ Pathumma-8B-Think │
-                      │ (thaillm.or.th)   │
-                      └────────┬──────────┘
-                               │
-               ┌───────────────┴───────────────┐
-               ▼                               ▼
-             BUY                             SELL
-               │                               │
-  ┌────────────▼───────────┐      ┌────────────▼──────────┐
-  │  Bracket Order         │      │  Close Position        │
-  │  ├─ Take Profit (+2.5%)│      │  (Market Order)        │
-  │  └─ Stop Loss  (-1.5%) │      └───────────────────────┘
-  └────────────────────────┘
-```
+![Strategy Flow](public/strategy-flow.svg)
 
 > **Note:** Vercel Hobby = daily cron max. For hourly trading, use [Cron-job.org](https://cron-job.org) (free) to call `GET /api/cron/ai-trade` every hour with header `Authorization: Bearer {CRON_SECRET}`
+
+## Database Schema
+
+![Database Schema](public/database-schema.svg)
 
 ## Tech Stack
 
