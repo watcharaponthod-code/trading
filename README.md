@@ -17,7 +17,8 @@
 
 ## Dashboard Preview
 
-![AlgoTrade Dashboard](public/dashboard.png)
+<!-- NOTE: Replace public/placeholder.jpg with your actual dashboard screenshot named dashboard.png -->
+![AlgoTrade Dashboard](public/placeholder.jpg)
 
 > AlgoTrade Dashboard — แสดง Portfolio Equity, Open Positions, P&L History และ Auto-Trade Engine แบบ Real-time
 
